@@ -12,16 +12,13 @@ export function Navbar({className}: {className: string}) {
 				<Link to='/' className={linkClass}>
 					Home
 				</Link>
-				<span className='text-light-primary invisible md:visible'>&#9671;</span>
-				<Link to='/example' className={linkClass}>
-					Example
-				</Link>
+				{/* <span className='text-light-primary invisible md:visible'>&#9671;</span> */}
 			</nav>
 		</div>
 	)
 }
 
-export default function NavbarTopLayout({
+export default function NavbarLayout({
 	children,
 	wrapperClassName = '',
 	navbarClassName = '',
@@ -34,7 +31,7 @@ export default function NavbarTopLayout({
 }) {
 	return (
 		<div
-			className={`min-h-screen bg-gradient-to-br from-primary-darkest to-dark-bg ${wrapperClassName}`}
+			className={`min-h-screen bg-gradient-to-br from-primary-darkest to-secondary-lightest/50 ${wrapperClassName}`}
 		>
 			<Navbar className={navbarClassName} />
 			<div
