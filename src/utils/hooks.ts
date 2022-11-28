@@ -9,21 +9,24 @@ const reqOpts = {
 	},
 }
 
-async function request<Tres>(
-	url: string,
-	config: RequestInit
-): Promise<Tres[]> {
-	return fetch(url, config)
-		.then(async (response) => response.json())
-		.then((data) => data.results as Tres[])
-}
+// Async function request<Tres, E>(
+// 	url: string,
+// 	config: RequestInit
+// ): Promise<Tres[], E> {
+// 	return fetch(url, config)
+// 		.then(async (response) => response.json())
+// 		.then((data) => data.results as Tres[])
+// 		.catch((error) => error as E)
+// }
 
 export const usePlaces = () =>
-	useQuery({
+	useQuery<Place[], Error>({
 		queryKey: ['places'],
 		queryFn: async () =>
-			request<Place>(
+			fetch(
 				'https://api.foursquare.com/v3/places/search?radius=1000&categories=13000',
 				reqOpts
-			),
+			)
+				.then(async (response) => response.json())
+				.then((data) => data.results as Place[]),
 	})
