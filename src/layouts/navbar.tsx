@@ -31,7 +31,7 @@ export default function NavbarLayout({
 }) {
 	return (
 		<div
-			className={`min-h-screen bg-gradient-to-br from-primary-darkest to-secondary-lightest/50 ${wrapperClassName}`}
+			className={`min-h-screen bg-gradient-to-br from-red-900/90 to-amber-600/60 ${wrapperClassName}`}
 		>
 			<Navbar className={navbarClassName} />
 			<div
