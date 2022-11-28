@@ -69,7 +69,7 @@ function Card({
 					${noPhoto ? 'rounded-l-lg' : ''}
 				`}
 			>
-				<h2 className='leading-6 tracking-tighter'>{name}</h2>
+				<h2 className='leading-6 tracking-tighter line-clamp-2'>{name}</h2>
 
 				<div className='text-base'>
 					<div className='grid grid-cols-12'>
