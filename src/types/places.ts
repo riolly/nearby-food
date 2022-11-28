@@ -24,14 +24,17 @@ export type Center = {
 export type Place = {
 	fsq_id: string
 	categories: Category[]
-	chains: any[]
 	distance: number
 	geocodes: Geocodes
-	link: string
 	location: Location
 	name: string
-	related_places: RelatedPlaces
-	timezone?: string
+	photos: Photo[]
+	popularity: number
+	price?: number
+	rating: number
+	stats: Stats
+	tastes?: string[]
+	verified: boolean
 }
 
 export type Category = {
@@ -51,37 +54,49 @@ export enum Suffix {
 
 export type Geocodes = {
 	main: Center
-	roof: Center
+	roof?: Center
 }
 
 export type Location = {
 	address: string
-	census_block: string
 	country: Country
-	cross_street?: string
-	dma: Dma
+	cross_street: string
 	formatted_address: string
 	locality: Locality
-	postcode: string
+	neighborhood?: string[]
+	postcode?: string
 	region: Region
-	address_extended?: string
 }
 
 export enum Country {
-	Us = 'US',
-}
-
-export enum Dma {
-	WashingtonDcHagrstwn = 'Washington, Dc-Hagrstwn',
+	ID = 'ID',
 }
 
 export enum Locality {
-	Ashburn = 'Ashburn',
-	Leesburg = 'Leesburg',
+	Yogyakarta = 'Yogyakarta',
 }
 
 export enum Region {
-	Va = 'VA',
+	DIYogyakarta = 'DI Yogyakarta',
 }
 
-export type RelatedPlaces = unknown
+export type Photo = {
+	id: string
+	created_at: Date
+	prefix: string
+	suffix: string
+	width: number
+	height: number
+	classifications?: Classification[]
+}
+
+export enum Classification {
+	Food = 'food',
+	Outdoor = 'outdoor',
+}
+
+export type Stats = {
+	total_photos: number
+	total_ratings: number
+	total_tips: number
+}

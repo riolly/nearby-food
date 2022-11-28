@@ -19,14 +19,35 @@ const reqOpts = {
 // 		.catch((error) => error as E)
 // }
 
-export const usePlaces = () =>
-	useQuery<Place[], Error>({
+export const usePlaces = () => {
+	const fields = [
+		'fsq_id',
+		'name',
+		'location',
+		'distance',
+		'categories',
+		'geocodes',
+		'price',
+		'rating',
+		'tastes',
+		'photos',
+		'stats',
+		'verified',
+		'popularity',
+	]
+	const fieldsUri = encodeURIComponent(fields.join(','))
+
+	const defaultRadius = 1000 // 1km
+	const defaultCategories = 13000 // Food & beverages
+
+	return useQuery<Place[], Error>({
 		queryKey: ['places'],
 		queryFn: async () =>
 			fetch(
-				'https://api.foursquare.com/v3/places/search?radius=1000&categories=13000',
+				`https://api.foursquare.com/v3/places/search?radius=${defaultRadius}&categories=${defaultCategories}&fields=${fieldsUri}`,
 				reqOpts
 			)
 				.then(async (response) => response.json())
 				.then((data) => data.results as Place[]),
 	})
+}
