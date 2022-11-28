@@ -13,8 +13,8 @@ module.exports = {
       colors: {
         light: {
           bg: colors.slate[50],
-          heading: colors.slate[200],
-          body: colors.slate[300],
+          heading: colors.slate[100],
+          body: colors.slate[200],
         },
         dark: {
           bg: colors.slate[900],
