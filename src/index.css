@@ -10,12 +10,10 @@
 	h5,
 	h6,
 	button {
-		@apply font-heading;
-		@apply text-light-heading;
+		@apply font-heading text-lg text-light-heading;
 	}
 
 	p {
-		@apply font-body;
-		@apply text-light-body;
+		@apply font-body text-lg text-light-body;
 	}
 }
