@@ -32,14 +32,15 @@ function HomePage() {
 	)
 }
 
-function Card({fsq_id, name, location, distance}: Place) {
+function Card({fsq_id, name, location, distance, categories}: Place) {
 	return (
 		<div
 			key={fsq_id}
 			className='col-span-full rounded-xl bg-primary-lightest/20 py-4 px-6'
 		>
 			<h2>{name}</h2>
-			<div className='flex justify-between'>
+
+			<div className='mt-2 flex justify-between'>
 				<div className='flex gap-2'>
 					<div className='mt-1 w-fit'>
 						<MapPinIcon className='h-5 w-5 text-secondary-normal' />
@@ -51,6 +52,24 @@ function Card({fsq_id, name, location, distance}: Place) {
 						{roundDistance(distance)}
 					</p>
 				</div>
+			</div>
+
+			<div className='ml-6 mt-1 space-x-2 overflow-hidden whitespace-nowrap'>
+				{categories.map(({id, icon, name}) => (
+					<div
+						key={id}
+						className='inline-flex items-center gap-1 rounded-full bg-secondary-normal pl-1 pr-3'
+					>
+						<img
+							src={icon.prefix + '32' + icon.suffix}
+							className='h-6 w-6 rounded-full'
+						/>
+
+						<p className='whitespace-nowrap text-sm font-semibold text-dark-body'>
+							{name}
+						</p>
+					</div>
+				))}
 			</div>
 		</div>
 	)
