@@ -54,7 +54,7 @@ function Card({fsq_id, name, location, distance, categories}: Place) {
 				</div>
 			</div>
 
-			<div className='ml-6 mt-1 space-x-2 overflow-hidden whitespace-nowrap'>
+			<div className='hide-scrollbar ml-6 mt-1 space-x-2 overflow-auto whitespace-nowrap'>
 				{categories.map(({id, icon, name}) => (
 					<div
 						key={id}
