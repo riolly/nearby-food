@@ -16,5 +16,5 @@ export const roundDistance = (distance: number) => {
 		unit = 'km'
 	}
 
-	return `~${rounded} ${unit}`
+	return `${rounded} ${unit}`
 }
