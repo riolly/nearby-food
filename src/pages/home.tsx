@@ -48,20 +48,53 @@ function Card({
 	rating,
 	stats,
 	price,
+	tastes,
 }: Place) {
 	const noPhoto = photos.length === 0
+
+	let tastes0: string[] = []
+	let tastes1: string[] = []
+	if (tastes) {
+		const middleIdx = Math.floor(tastes.length / 2)
+		tastes0 = [...tastes].splice(0, middleIdx)
+		tastes1 = [...tastes].splice(middleIdx)
+	}
 
 	return (
 		<div
 			key={fsq_id}
-			className='flex h-48 rounded-lg bg-primary-darkest/75 shadow-lg shadow-secondary-darkest'
+			className='relative flex h-48 rounded-lg bg-primary-darkest/75 shadow-lg shadow-secondary-darkest'
 		>
 			{!noPhoto && (
-				<img
-					src={photos[0].prefix + '200x200' + photos[0].suffix}
-					alt={name + "'s photo"}
-					className='w-36 rounded-l-lg object-center'
-				/>
+				<>
+					<img
+						src={photos[0].prefix + '200x200' + photos[0].suffix}
+						alt={name + "'s photo"}
+						className='w-36 rounded-l-lg object-center'
+					/>
+					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll whitespace-nowrap rounded-xl'>
+						<div className='h-5 space-x-0.5'>
+							{tastes0?.map((taste) => (
+								<p
+									key={taste}
+									className='inline rounded-full bg-primary-darker/80 px-2 text-xs font-semibold '
+								>
+									{taste}
+								</p>
+							))}
+						</div>
+						<div className='h-5 space-x-0.5'>
+							{tastes1?.map((taste) => (
+								<p
+									key={taste}
+									className='inline rounded-full bg-primary-darker/80 px-2 text-xs font-semibold '
+								>
+									{taste}
+								</p>
+							))}
+						</div>
+					</div>
+				</>
 			)}
 			<div
 				className={`
@@ -86,7 +119,7 @@ function Card({
 								className='inline h-5 w-5 align-text-top text-primary-lighter/75'
 								aria-label='distance'
 							/>
-							<span>&nbsp;{stats.total_tips}</span>
+							<span>&nbsp;{stats?.total_tips}</span>
 						</p>
 					</div>
 
