@@ -67,11 +67,17 @@ function Card({
 		>
 			{!noPhoto && (
 				<>
-					<img
-						src={photos[0].prefix + '200x200' + photos[0].suffix}
-						alt={name + "'s photo"}
-						className='w-36 rounded-l-lg object-center'
-					/>
+					<div className='w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg'>
+						{photos.map((photo) => (
+							<div key={photo.id} className='snap-center rounded-l-lg'>
+								<img
+									src={photo.prefix + '200x200' + photo.suffix}
+									alt={name + "'s photo"}
+									className='h-48 object-cover'
+								/>
+							</div>
+						))}
+					</div>
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll whitespace-nowrap rounded-xl'>
 						<div className='h-5 space-x-0.5'>
 							{tastes0?.map((taste) => (
