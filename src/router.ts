@@ -1,15 +1,20 @@
 import {createRouteConfig, createReactRouter} from '@tanstack/react-router'
 
 import HomePage from 'pages/home'
+import MapPage from 'pages/map'
 
 const rootRoute = createRouteConfig()
 
-const indexRoute = rootRoute.createRoute({
+const homeRoute = rootRoute.createRoute({
 	path: '/',
 	component: HomePage,
 })
+const mapRoute = rootRoute.createRoute({
+	path: '/map',
+	component: MapPage,
+})
 
-const routeConfig = rootRoute.addChildren([indexRoute])
+const routeConfig = rootRoute.addChildren([homeRoute, mapRoute])
 const router = createReactRouter({routeConfig})
 
 export default router
