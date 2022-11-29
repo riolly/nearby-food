@@ -54,13 +54,16 @@ function Card({
 }: Place) {
 	const noPhoto = photos.length === 0
 
-	let tastes0: string[] = []
-	let tastes1: string[] = []
-	if (tastes) {
-		const middleIdx = Math.floor(tastes.length / 2)
-		tastes0 = [...tastes].splice(0, middleIdx)
-		tastes1 = [...tastes].splice(middleIdx)
-	}
+	tastes?.sort((a, b) => a.length - b.length)
+	const tastesBottom: string[] = []
+	const tastesTop: string[] = []
+	tastes?.forEach((taste, i) => {
+		if ((i + 1) % 2 === 1) {
+			tastesBottom.push(taste)
+		} else {
+			tastesTop.push(taste)
+		}
+	})
 
 	const [photoActiveId, setPhotoActiveId] = React.useState(0)
 
@@ -141,26 +144,18 @@ function Card({
 
 					{/* #TASTES */}
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 space-y-1 overflow-y-hidden whitespace-nowrap rounded-lg'>
-						<div className='h-4 space-x-0.5'>
-							{tastes0?.map((taste) => (
-								<p
-									key={taste}
-									className='inline rounded-full bg-primary-darker/75 px-2 align-top text-xs font-semibold'
-								>
-									{taste}
-								</p>
-							))}
-						</div>
-						<div className='h-4 space-x-0.5'>
-							{tastes1?.map((taste) => (
-								<p
-									key={taste}
-									className='inline rounded-full bg-primary-darker/75 px-2 align-top text-xs font-semibold'
-								>
-									{taste}
-								</p>
-							))}
-						</div>
+						{[tastesTop, tastesBottom].map((tastes, i) => (
+							<div className='h-4 space-x-0.5' key={`tastes-${i}`}>
+								{tastes.map((taste) => (
+									<p
+										key={taste}
+										className='inline rounded-full bg-primary-darker/75 px-2 align-top text-xs font-semibold'
+									>
+										{taste}
+									</p>
+								))}
+							</div>
+						))}
 					</div>
 				</>
 			)}
