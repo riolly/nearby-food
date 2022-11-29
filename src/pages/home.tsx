@@ -7,6 +7,7 @@ import {
 	MapIcon,
 	BanknotesIcon,
 	HeartIcon,
+	ChevronUpDownIcon,
 } from '@heroicons/react/24/solid'
 
 import {usePlaces} from 'utils/hooks'
@@ -63,11 +64,11 @@ function Card({
 	return (
 		<div
 			key={fsq_id}
-			className='relative flex h-48 rounded-lg bg-primary-darkest/75 shadow-lg shadow-secondary-darkest'
+			className='relative flex h-48 rounded-lg bg-primary-darkest/75 shadow-lg shadow-secondary-darkest '
 		>
 			{!noPhoto && (
 				<>
-					<div className='w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg'>
+					<div className='md:hide-scrollbar w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg [direction:rtl]'>
 						{photos.map((photo) => (
 							<div key={photo.id} className='snap-center rounded-l-lg'>
 								<img
@@ -78,6 +79,11 @@ function Card({
 							</div>
 						))}
 					</div>
+					{photos.length > 1 && (
+						<div className='absolute top-1/2 w-5 -translate-y-1/2 -translate-x-1/2 rounded-lg bg-primary-darkest py-0.5'>
+							<ChevronUpDownIcon className='-ml-1 h-7 w-7 text-light-bg/75' />
+						</div>
+					)}
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll whitespace-nowrap rounded-xl'>
 						<div className='h-5 space-x-0.5'>
 							{tastes0?.map((taste) => (
