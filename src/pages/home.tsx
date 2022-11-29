@@ -6,8 +6,9 @@ import {
 	MapIcon,
 	BanknotesIcon,
 	HeartIcon,
-	ChevronUpDownIcon,
 	CheckBadgeIcon,
+	ChevronUpIcon,
+	ChevronDownIcon,
 } from '@heroicons/react/24/solid'
 
 import {usePlaces} from 'utils/hooks'
@@ -64,11 +65,11 @@ function Card({
 	return (
 		<div
 			key={fsq_id}
-			className='relative flex h-48 rounded-lg bg-primary-darkest/75 shadow-lg shadow-secondary-darkest '
+			className='relative flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest '
 		>
 			{!noPhoto && (
 				<>
-					<div className='md:hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg [direction:rtl]'>
+					<div className='md:hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-xl [direction:rtl]'>
 						{photos.map((photo) => (
 							<div key={photo.id} className='snap-center rounded-l-lg'>
 								<img
@@ -80,12 +81,20 @@ function Card({
 						))}
 					</div>
 					{photos.length > 1 && (
-						<div className='absolute top-1/2 w-5 -translate-y-1/2 -translate-x-1/2 rounded-lg bg-primary-darkest py-0.5'>
-							<ChevronUpDownIcon className='-ml-1 h-7 w-7 text-light-bg/75' />
+						<div className='absolute top-1/2 left-1 flex -translate-y-1/2 flex-col items-center gap-1'>
+							<ChevronUpIcon className='h-3 w-3 rounded-full bg-dark-bg/60 p-[1px] text-white' />
+							{photos.map((photo) => (
+								<div
+									key={photo.id}
+									className='h-1 w-1 rounded-full bg-dark-bg/60'
+								/>
+							))}
+							<ChevronDownIcon className='h-3 w-3 rounded-full bg-dark-bg/60 p-[1px] text-white' />
 						</div>
 					)}
-					<div className='absolute left-32 top-2.5 ml-0.5 rounded-full bg-primary-darkest p-0.5'>
-						<CheckBadgeIcon className='h-6 w-6 text-secondary-lighter' />
+					<div className='absolute left-36 top-2 h-[30px] w-[30px] -translate-x-1/2 rounded-full bg-primary-darkest'>
+						<div className='centered h-4 w-4 rounded-full bg-light-bg' />
+						<CheckBadgeIcon className='centered h-6 w-6 text-secondary-lighter' />
 					</div>
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll overflow-y-hidden whitespace-nowrap rounded rounded-t-xl'>
 						<div className='h-5 space-x-0.5'>
