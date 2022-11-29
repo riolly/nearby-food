@@ -75,6 +75,8 @@ function Card({
 	}
 
 	const getChevronClassName = (move: 'up' | 'down') => {
+		if (noPhoto) return ''
+
 		const activeClassName =
 			move === 'up'
 				? photoActiveId === 0
