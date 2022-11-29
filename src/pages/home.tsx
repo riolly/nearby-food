@@ -8,6 +8,7 @@ import {
 	BanknotesIcon,
 	HeartIcon,
 	ChevronUpDownIcon,
+	CheckBadgeIcon,
 } from '@heroicons/react/24/solid'
 
 import {usePlaces} from 'utils/hooks'
@@ -68,7 +69,7 @@ function Card({
 		>
 			{!noPhoto && (
 				<>
-					<div className='md:hide-scrollbar w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg [direction:rtl]'>
+					<div className='md:hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-lg [direction:rtl]'>
 						{photos.map((photo) => (
 							<div key={photo.id} className='snap-center rounded-l-lg'>
 								<img
@@ -84,6 +85,9 @@ function Card({
 							<ChevronUpDownIcon className='-ml-1 h-7 w-7 text-light-bg/75' />
 						</div>
 					)}
+					<div className='absolute left-32 top-2.5 ml-0.5 rounded-full bg-primary-darkest p-0.5'>
+						<CheckBadgeIcon className='h-6 w-6 text-secondary-lighter' />
+					</div>
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll whitespace-nowrap rounded-xl'>
 						<div className='h-5 space-x-0.5'>
 							{tastes0?.map((taste) => (
