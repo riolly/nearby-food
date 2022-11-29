@@ -94,6 +94,7 @@ function Card({
 		>
 			{!noPhoto && (
 				<>
+					{/* #PHOTOS */}
 					<div
 						className='hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-xl [direction:rtl]'
 						onScroll={handlePhotosSnap}
@@ -108,6 +109,8 @@ function Card({
 							</div>
 						))}
 					</div>
+
+					{/* #SCROLLBAR INDICATOR */}
 					{photos.length > 1 && (
 						<div className='absolute top-1/2 left-1 flex -translate-y-1/2 flex-col items-center gap-1'>
 							<ChevronUpIcon className={getChevronClassName('up')} />
@@ -127,16 +130,20 @@ function Card({
 							<ChevronDownIcon className={getChevronClassName('down')} />
 						</div>
 					)}
+
+					{/* #VERIFIED BADGE */}
 					<div className='absolute left-36 top-2 h-[30px] w-[30px] -translate-x-1/2 rounded-full bg-primary-darkest'>
 						<div className='centered h-4 w-4 rounded-full bg-light-bg' />
 						<CheckBadgeIcon className='centered h-6 w-6 text-secondary-lighter' />
 					</div>
+
+					{/* #TASTES */}
 					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll overflow-y-hidden whitespace-nowrap rounded rounded-t-xl'>
 						<div className='h-5 space-x-0.5'>
 							{tastes0?.map((taste) => (
 								<p
 									key={taste}
-									className='inline rounded-full bg-primary-darker/80 px-2 text-xs font-semibold '
+									className='inline rounded-full bg-primary-darker/75 px-2 text-xs font-semibold '
 								>
 									{taste}
 								</p>
@@ -146,7 +153,7 @@ function Card({
 							{tastes1?.map((taste) => (
 								<p
 									key={taste}
-									className='inline rounded-full bg-primary-darker/80 px-2 text-xs font-semibold '
+									className='inline rounded-full bg-primary-darker/75 px-2 text-xs font-semibold '
 								>
 									{taste}
 								</p>
@@ -155,16 +162,20 @@ function Card({
 					</div>
 				</>
 			)}
+
+			{/* #CONTENT CONTAINER */}
 			<div
 				className={`
 					flex h-full min-w-0 flex-1 flex-col gap-2 rounded-r-lg px-4 pt-3 pb-2
 					${noPhoto ? 'rounded-l-lg' : ''}
 				`}
 			>
+				{/* #TITLE */}
 				<h2 className='text-base leading-6 tracking-tighter line-clamp-2'>
 					{name}
 				</h2>
 
+				{/* #DETAILS */}
 				<div className=''>
 					<div className='grid grid-cols-12'>
 						<p className='col-span-7 text-base font-semibold text-opacity-80'>
@@ -209,6 +220,7 @@ function Card({
 					</p>
 				</div>
 
+				{/* #CATEGORIES */}
 				<div className='hide-scrollbar mt-0.5 space-x-2 overflow-auto whitespace-nowrap'>
 					{categories.map(({id, icon, name}) => (
 						<div
