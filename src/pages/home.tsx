@@ -2,7 +2,6 @@ import React from 'react'
 import NavbarTopLayout from 'layouts/navbar'
 
 import {
-	MapPinIcon,
 	StarIcon,
 	MapIcon,
 	BanknotesIcon,
@@ -114,7 +113,7 @@ function Card({
 			)}
 			<div
 				className={`
-					flex h-full min-w-0 flex-1 flex-col gap-2 rounded-r-lg px-4 py-3
+					flex h-full min-w-0 flex-1 flex-col gap-2 rounded-r-lg px-4 pt-3 pb-2
 					${noPhoto ? 'rounded-l-lg' : ''}
 				`}
 			>
@@ -124,7 +123,7 @@ function Card({
 
 				<div className=''>
 					<div className='grid grid-cols-12'>
-						<p className='col-span-7 text-base font-semibold'>
+						<p className='col-span-7 text-base font-semibold text-opacity-80'>
 							<StarIcon
 								className='inline h-5 w-5 align-text-top text-secondary-lightest/75'
 								aria-label='rating'
@@ -132,7 +131,7 @@ function Card({
 							<span>&nbsp;{rating ?? '-'}&nbsp;</span>
 							{stats?.total_ratings && <span>({stats.total_ratings})</span>}
 						</p>
-						<p className='col-span-5 text-base font-semibold'>
+						<p className='col-span-5 text-base font-semibold text-opacity-80'>
 							<HeartIcon
 								className='inline h-5 w-5 align-text-top text-primary-lighter/75'
 								aria-label='distance'
@@ -142,14 +141,14 @@ function Card({
 					</div>
 
 					<div className='grid grid-cols-12'>
-						<p className='col-span-7 text-base font-semibold'>
+						<p className='col-span-7 text-base font-semibold text-opacity-80'>
 							<MapIcon
-								className='inline h-5 w-5 align-text-top text-secondary-lightest/75'
+								className='inline h-5 w-5 align-text-top text-blue-500/75'
 								aria-label='distance'
 							/>
 							<span>&nbsp;{roundDistance(distance)}</span>
 						</p>
-						<p className='col-span-5 text-base font-semibold'>
+						<p className='col-span-5 text-base font-semibold text-opacity-80'>
 							<BanknotesIcon
 								className='inline h-5 w-5 align-text-top text-green-500/75'
 								aria-label='price'
@@ -161,16 +160,12 @@ function Card({
 						</p>
 					</div>
 
-					<p className='truncate leading-5'>
-						<MapPinIcon
-							className='float-left mr-0.5 h-full w-5 text-secondary-lightest/75'
-							aria-label='address'
-						/>
-						<span className='text-base font-semibold'>{location.address}</span>
+					<p className='mt-0.5 text-base font-semibold italic leading-4 text-opacity-80 line-clamp-2'>
+						{location.address}
 					</p>
 				</div>
 
-				<div className='hide-scrollbar mt-1 space-x-2 overflow-auto whitespace-nowrap'>
+				<div className='hide-scrollbar mt-0.5 space-x-2 overflow-auto whitespace-nowrap'>
 					{categories.map(({id, icon, name}) => (
 						<div
 							key={id}
@@ -181,7 +176,7 @@ function Card({
 								className='h-6 w-6 rounded-full '
 							/>
 
-							<p className='text-sm font-semibold text-dark-body'>
+							<p className='text-sm font-semibold text-dark-body/80'>
 								{name.replace(' Restaurant', '')}
 							</p>
 						</div>
