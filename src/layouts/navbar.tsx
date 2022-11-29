@@ -29,7 +29,7 @@ export function Navbar({className}: {className: string}) {
 							) : (
 								<QueueListIcon className='h-6 w-6' />
 							)}
-							List
+							Quick Pick
 						</span>
 					)}
 				</Link>
@@ -47,7 +47,7 @@ export function Navbar({className}: {className: string}) {
 							) : (
 								<MapIcon className='h-6 w-6' />
 							)}
-							Maps
+							Explore
 						</span>
 					)}
 				</Link>
