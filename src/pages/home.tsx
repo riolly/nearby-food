@@ -62,6 +62,31 @@ function Card({
 		tastes1 = [...tastes].splice(middleIdx)
 	}
 
+	const [photoActiveId, setPhotoActiveId] = React.useState(0)
+
+	const handlePhotosSnap = (event: React.UIEvent<HTMLDivElement>) => {
+		const parentY = event.currentTarget.getBoundingClientRect().y
+		Array.from(event.currentTarget.children).forEach((child, i) => {
+			const childY = child.getBoundingClientRect().y
+			if (childY === parentY) {
+				setPhotoActiveId(i)
+			}
+		})
+	}
+
+	const getChevronClassName = (move: 'up' | 'down') => {
+		const activeClassName =
+			move === 'up'
+				? photoActiveId === 0
+					? 'bg-opacity-40 text-slate-500'
+					: 'bg-opacity-70 text-white'
+				: photoActiveId === photos.length - 1
+				? 'bg-opacity-40 text-slate-500'
+				: 'bg-opacity-70 text-white'
+
+		return `h-3 w-3 rounded-full bg-dark-bg p-[1px] ${activeClassName}`
+	}
+
 	return (
 		<div
 			key={fsq_id}
@@ -69,7 +94,10 @@ function Card({
 		>
 			{!noPhoto && (
 				<>
-					<div className='md:hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-xl [direction:rtl]'>
+					<div
+						className='hide-scrollbar relative w-36 snap-y snap-mandatory overflow-y-scroll rounded-l-xl [direction:rtl]'
+						onScroll={handlePhotosSnap}
+					>
 						{photos.map((photo) => (
 							<div key={photo.id} className='snap-center rounded-l-lg'>
 								<img
@@ -82,14 +110,21 @@ function Card({
 					</div>
 					{photos.length > 1 && (
 						<div className='absolute top-1/2 left-1 flex -translate-y-1/2 flex-col items-center gap-1'>
-							<ChevronUpIcon className='h-3 w-3 rounded-full bg-dark-bg/60 p-[1px] text-white' />
-							{photos.map((photo) => (
+							<ChevronUpIcon className={getChevronClassName('up')} />
+							{photos.map((photo, i) => (
 								<div
 									key={photo.id}
-									className='h-1 w-1 rounded-full bg-dark-bg/60'
-								/>
+									className={`
+										relative rounded-full bg-dark-bg
+										${i === photoActiveId ? 'h-2 w-2 bg-opacity-70' : 'h-1 w-1 bg-opacity-40'}
+									`}
+								>
+									{i === photoActiveId && (
+										<div className='centered h-1 w-1 rounded-full bg-light-bg/75' />
+									)}
+								</div>
 							))}
-							<ChevronDownIcon className='h-3 w-3 rounded-full bg-dark-bg/60 p-[1px] text-white' />
+							<ChevronDownIcon className={getChevronClassName('down')} />
 						</div>
 					)}
 					<div className='absolute left-36 top-2 h-[30px] w-[30px] -translate-x-1/2 rounded-full bg-primary-darkest'>
