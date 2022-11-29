@@ -24,7 +24,7 @@ function HomePage() {
 			<main className='flex w-full flex-col items-center gap-8 px-8'>
 				<h1>Food & Beverages Near You</h1>
 
-				<div className='w-full space-y-4'>
+				<div className='container grid grid-cols-6 gap-4'>
 					{isLoading ? (
 						<p>Loading ...</p>
 					) : isError ? (
@@ -92,7 +92,7 @@ function Card({
 	return (
 		<div
 			key={fsq_id}
-			className='relative flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest '
+			className='relative col-span-full flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest md:col-span-3 lg:col-span-2'
 		>
 			{!noPhoto && (
 				<>
