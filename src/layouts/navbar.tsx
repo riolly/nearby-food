@@ -13,7 +13,7 @@ export function Navbar({className}: {className: string}) {
 		'text-light-primary flex items-start gap-2 rounded px-2 py-1 font-medium hover:underline'
 	return (
 		<div
-			className={`fixed bottom-0 z-10 flex w-full items-center justify-center rounded-t-xl border-t-0 bg-primary-darkest/60 bg-opacity-30 py-2 underline-offset-4 shadow-sm backdrop-blur-lg md:relative md:bg-inherit ${className}`}
+			className={`fixed bottom-0 z-10 flex w-full items-center justify-center rounded-t-xl border-t-0 bg-primary-darkest/60 py-2 underline-offset-4 backdrop-blur-lg md:relative md:bg-inherit ${className}`}
 		>
 			<nav className='flex h-fit items-center gap-2 text-light-heading'>
 				<Link
