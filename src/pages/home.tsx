@@ -88,7 +88,7 @@ function Card({
 					<div className='absolute left-32 top-2.5 ml-0.5 rounded-full bg-primary-darkest p-0.5'>
 						<CheckBadgeIcon className='h-6 w-6 text-secondary-lighter' />
 					</div>
-					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll whitespace-nowrap rounded-xl'>
+					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll overflow-y-hidden whitespace-nowrap rounded rounded-t-xl'>
 						<div className='h-5 space-x-0.5'>
 							{tastes0?.map((taste) => (
 								<p
