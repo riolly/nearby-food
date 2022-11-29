@@ -138,7 +138,7 @@ function Card({
 
 					{/* #VERIFIED BADGE */}
 					<div className='absolute left-36 top-2 h-[30px] w-[30px] -translate-x-1/2 rounded-full bg-primary-darkest'>
-						<div className='centered h-4 w-4 rounded-full bg-light-bg' />
+						{/* <div className='centered h-4 w-4 rounded-full bg-light-bg' /> */}
 						<CheckBadgeIcon className='centered h-6 w-6 text-secondary-lighter' />
 					</div>
 
@@ -177,7 +177,7 @@ function Card({
 					<div className='grid grid-cols-12'>
 						<p className='col-span-7 text-base font-semibold text-opacity-80'>
 							<StarIcon
-								className='inline h-5 w-5 align-text-top text-secondary-lightest/75'
+								className='inline h-5 w-5 align-text-top text-yellow-400/75'
 								aria-label='rating'
 							/>
 							<span>&nbsp;{rating ?? '-'}&nbsp;</span>
@@ -185,7 +185,7 @@ function Card({
 						</p>
 						<p className='col-span-5 text-base font-semibold text-opacity-80'>
 							<HeartIcon
-								className='inline h-5 w-5 align-text-top text-primary-lighter/75'
+								className='inline h-5 w-5 align-text-top text-red-400/75'
 								aria-label='distance'
 							/>
 							<span>&nbsp;{stats?.total_tips}</span>
@@ -195,14 +195,14 @@ function Card({
 					<div className='grid grid-cols-12'>
 						<p className='col-span-7 text-base font-semibold text-opacity-80'>
 							<MapIcon
-								className='inline h-5 w-5 align-text-top text-blue-500/75'
+								className='inline h-5 w-5 align-text-top text-blue-400/75'
 								aria-label='distance'
 							/>
 							<span>&nbsp;{roundDistance(distance)}</span>
 						</p>
 						<p className='col-span-5 text-base font-semibold text-opacity-80'>
 							<BanknotesIcon
-								className='inline h-5 w-5 align-text-top text-green-500/75'
+								className='inline h-5 w-5 align-text-top text-green-400/75'
 								aria-label='price'
 							/>
 							<span>
