@@ -140,22 +140,22 @@ function Card({
 					</div>
 
 					{/* #TASTES */}
-					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 overflow-scroll overflow-y-hidden whitespace-nowrap rounded rounded-t-xl'>
-						<div className='h-5 space-x-0.5'>
+					<div className='hide-scrollbar absolute left-2 bottom-2 w-32 space-y-1 overflow-y-hidden whitespace-nowrap rounded-lg'>
+						<div className='h-4 space-x-0.5'>
 							{tastes0?.map((taste) => (
 								<p
 									key={taste}
-									className='inline rounded-full bg-primary-darker/75 px-2 text-xs font-semibold '
+									className='inline rounded-full bg-primary-darker/75 px-2 align-top text-xs font-semibold'
 								>
 									{taste}
 								</p>
 							))}
 						</div>
-						<div className='h-5 space-x-0.5'>
+						<div className='h-4 space-x-0.5'>
 							{tastes1?.map((taste) => (
 								<p
 									key={taste}
-									className='inline rounded-full bg-primary-darker/75 px-2 text-xs font-semibold '
+									className='inline rounded-full bg-primary-darker/75 px-2 align-top text-xs font-semibold'
 								>
 									{taste}
 								</p>
@@ -223,11 +223,11 @@ function Card({
 				</div>
 
 				{/* #CATEGORIES */}
-				<div className='hide-scrollbar mt-0.5 space-x-2 overflow-auto whitespace-nowrap'>
+				<div className='hide-scrollbar mt-0.5 space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
 					{categories.map(({id, icon, name}) => (
 						<div
 							key={id}
-							className='inline-flex items-center gap-1 rounded-full bg-secondary-normal pl-1 pr-3'
+							className='inline-flex items-center gap-1 rounded-full bg-secondary-normal pl-1 pr-3 align-middle'
 						>
 							<img
 								src={icon.prefix + '32' + icon.suffix}
