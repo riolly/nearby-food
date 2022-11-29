@@ -118,11 +118,13 @@ function Card({
 					${noPhoto ? 'rounded-l-lg' : ''}
 				`}
 			>
-				<h2 className='leading-6 tracking-tighter line-clamp-2'>{name}</h2>
+				<h2 className='text-base leading-6 tracking-tighter line-clamp-2'>
+					{name}
+				</h2>
 
-				<div className='text-base'>
+				<div className=''>
 					<div className='grid grid-cols-12'>
-						<p className='col-span-7'>
+						<p className='col-span-7 text-base font-semibold'>
 							<StarIcon
 								className='inline h-5 w-5 align-text-top text-secondary-lightest/75'
 								aria-label='rating'
@@ -130,7 +132,7 @@ function Card({
 							<span>&nbsp;{rating ?? '-'}&nbsp;</span>
 							{stats?.total_ratings && <span>({stats.total_ratings})</span>}
 						</p>
-						<p className='col-span-5'>
+						<p className='col-span-5 text-base font-semibold'>
 							<HeartIcon
 								className='inline h-5 w-5 align-text-top text-primary-lighter/75'
 								aria-label='distance'
@@ -140,14 +142,14 @@ function Card({
 					</div>
 
 					<div className='grid grid-cols-12'>
-						<p className='col-span-7'>
+						<p className='col-span-7 text-base font-semibold'>
 							<MapIcon
 								className='inline h-5 w-5 align-text-top text-secondary-lightest/75'
 								aria-label='distance'
 							/>
 							<span>&nbsp;{roundDistance(distance)}</span>
 						</p>
-						<p className='col-span-5'>
+						<p className='col-span-5 text-base font-semibold'>
 							<BanknotesIcon
 								className='inline h-5 w-5 align-text-top text-green-500/75'
 								aria-label='price'
@@ -164,7 +166,7 @@ function Card({
 							className='float-left mr-0.5 h-full w-5 text-secondary-lightest/75'
 							aria-label='address'
 						/>
-						<span className=''>{location.address}</span>
+						<span className='text-base font-semibold'>{location.address}</span>
 					</p>
 				</div>
 
