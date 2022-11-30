@@ -2,45 +2,55 @@ import React, {type Dispatch, type SetStateAction} from 'react'
 
 import {Combobox, Dialog, Transition} from '@headlessui/react'
 import {MagnifyingGlassIcon} from '@heroicons/react/24/solid'
+import {categories} from 'assets/categories'
+
+import {type CategoryLocal} from 'types/places'
 
 export default function SearchBox({
-	openState,
-	queryState,
+	isOpen,
+	setIsOpen,
+	setSearchQuery,
 }: {
-	openState: [boolean, Dispatch<SetStateAction<boolean>>]
-	queryState: [string, Dispatch<SetStateAction<string>>]
+	isOpen: boolean
+	setIsOpen: Dispatch<SetStateAction<boolean>>
+	setSearchQuery: Dispatch<SetStateAction<string | number>>
 }) {
-	const [open, setOpen] = openState
-	const [query, setQuery] = queryState
+	const [queryTemp, setQueryTemp] = React.useState('')
+
+	// TODO: improve performance (useTransition / useDefferedValue)
+	const filteredCategories =
+		queryTemp === ''
+			? []
+			: categories.filter((category) =>
+					category.label.toLowerCase().includes(queryTemp.toLowerCase())
+			  )
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e, '<<<<< input change')
+		setQueryTemp(e.target.value)
 	}
 
 	const onInputEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		const target = e.target as HTMLInputElement
 		if (e.key === 'Enter') {
-			setQuery(target.value)
-			setOpen(false)
+			setSearchQuery(target.value)
+			setIsOpen(false)
 		}
 	}
 
-	const onSelectOption = (e: any) => {
-		console.log(e, '<<<<< input change')
+	const onSelectOption = (category: CategoryLocal) => {
+		setSearchQuery(category.id)
+	}
+
+	const onLeaveSearch = () => {
+		setQueryTemp('')
 	}
 
 	return (
-		<Transition.Root
-			show={open}
-			as='form'
-			afterLeave={() => {
-				setQuery('')
-			}}
-		>
+		<Transition.Root show={isOpen} as='form' afterLeave={onLeaveSearch}>
 			<Dialog
 				as='div'
 				className='fixed inset-0 z-10 overflow-y-auto p-4 pt-6 sm:p-6 md:p-20'
-				onClose={setOpen}
+				onClose={setIsOpen}
 			>
 				<Transition.Child
 					as={React.Fragment}
@@ -80,6 +90,27 @@ export default function SearchBox({
 								onKeyDown={onInputEnter}
 							/>
 						</div>
+
+						{filteredCategories.length > 0 && (
+							<Combobox.Options
+								static
+								className='max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-dark-body'
+							>
+								{/* TODO: add the query as default selected option & add separator */}
+								{filteredCategories.map((category) => (
+									<Combobox.Option
+										key={category.id}
+										value={category}
+										className={({active}) => `
+											cursor-default select-none py-2 px-4
+											${active ? 'bg-primary-darker text-white' : ''}
+										`}
+									>
+										{category.label}
+									</Combobox.Option>
+								))}
+							</Combobox.Options>
+						)}
 					</Combobox>
 				</Transition.Child>
 			</Dialog>

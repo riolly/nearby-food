@@ -12,25 +12,17 @@ import {
 	MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid'
 
-import {usePlaces, useSearchPlaces} from 'utils/hooks'
+import {useSearchPlaces} from 'utils/hooks'
 import {roundDistance} from 'utils/format'
 
 import {type Place} from 'types/places'
 
 function HomePage() {
-	const places = usePlaces()
-
-	const searchOpenState = React.useState(false)
-	const searchQueryState = React.useState('')
-	const searchPlaces = useSearchPlaces(searchQueryState[0])
-
-	const isLoading = searchPlaces.isLoading ?? places.isLoading
-	const isError = searchPlaces.isError ?? places.isError
-	const error = searchPlaces.error ?? places.error
-	const data = searchPlaces.data ?? places.data
+	const [isSearchOpen, setIsSearchOpen] = React.useState(false)
+	const [searchQuery, setSearchQuery] = React.useState<string | number>(13000)
+	const {isLoading, isError, data, error} = useSearchPlaces(searchQuery)
 	const isEmpty = !data || data.length === 0
 
-	const [isSearchOpen, setIsSearchOpen] = searchOpenState
 	const onSearchClick = () => {
 		setIsSearchOpen(true)
 	}
@@ -64,7 +56,11 @@ function HomePage() {
 			>
 				<MagnifyingGlassIcon className='h-8 w-8 text-light-bg' />
 			</button>
-			<SearchBox openState={searchOpenState} queryState={searchQueryState} />
+			<SearchBox
+				isOpen={isSearchOpen}
+				setIsOpen={setIsSearchOpen}
+				setSearchQuery={setSearchQuery}
+			/>
 		</NavbarTopLayout>
 	)
 }

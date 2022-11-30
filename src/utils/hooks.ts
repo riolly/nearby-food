@@ -38,31 +38,23 @@ const fieldsUri = encodeURIComponent(fields.join(','))
 const defaultRadius = 1000 // 1km
 const defaultCategories = 13000 // Food & beverages
 
-export const usePlaces = (opts: UseQueryOptions<Place[], Error> | void) =>
-	useQuery<Place[], Error>({
-		queryKey: ['places'],
-		queryFn: async () =>
-			fetch(
-				`https://api.foursquare.com/v3/places/search?radius=${defaultRadius}&categories=${defaultCategories}&fields=${fieldsUri}`,
-				reqOpts
-			)
-				.then(async (response) => response.json())
-				.then((data) => data.results as Place[]),
-		...opts,
-	})
-
 export const useSearchPlaces = (
-	query: string,
+	query: string | number,
 	opts: UseQueryOptions<Place[], Error> | void
-) =>
-	useQuery<Place[], Error>({
+) => {
+	const category = typeof query === 'number' ? query : defaultCategories
+	const queryEncode =
+		typeof query === 'string' ? `&query=${encodeURIComponent(query)}` : ''
+
+	return useQuery<Place[], Error>({
 		queryKey: ['places', query],
 		queryFn: async () =>
 			fetch(
-				`https://api.foursquare.com/v3/places/search?radius=${defaultRadius}&categories=${defaultCategories}&fields=${fieldsUri}&query=${query}`,
+				`https://api.foursquare.com/v3/places/search?radius=${defaultRadius}&categories=${category}&fields=${fieldsUri}${queryEncode}`,
 				reqOpts
 			)
 				.then(async (response) => response.json())
 				.then((data) => data.results as Place[]),
 		...opts,
 	})
+}
