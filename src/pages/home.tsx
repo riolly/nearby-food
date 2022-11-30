@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/solid'
 
 import {useSearchPlaces} from 'utils/hooks'
-import {roundDistance} from 'utils/format'
+import {roundDistance, kThousand} from 'utils/format'
 import {defaultCategoryId} from 'utils/constant'
 
 import {type Place} from 'types/places'
@@ -221,52 +221,49 @@ function Card({
 				</h2>
 
 				{/* #DETAILS */}
-				<div className=''>
-					<div className='grid grid-cols-12'>
-						<p className='col-span-7 text-base font-semibold text-opacity-80'>
-							<StarIcon
-								className='inline h-5 w-5 align-text-top text-yellow-400/75'
-								aria-label='rating'
-							/>
-							<span>&nbsp;{rating ?? '-'}&nbsp;</span>
-							{stats?.total_ratings && <span>({stats.total_ratings})</span>}
-						</p>
-						<p className='col-span-5 text-base font-semibold text-opacity-80'>
-							<HeartIcon
-								className='inline h-5 w-5 align-text-top text-red-400/75'
-								aria-label='distance'
-							/>
-							<span>&nbsp;{stats?.total_tips}</span>
-						</p>
-					</div>
+				<div className='-mt-0.5 grid grid-cols-12 gap-x-1.5'>
+					<p className='col-span-7 text-base font-semibold text-opacity-80'>
+						<StarIcon
+							className='inline h-5 w-5 align-text-top text-yellow-400/75'
+							aria-label='rating'
+						/>
+						<span>&nbsp;{rating ?? '-'}&nbsp;</span>
+						{stats?.total_ratings && (
+							<span>({kThousand(stats.total_ratings)})</span>
+						)}
+					</p>
+					<p className='col-span-5 text-base font-semibold text-opacity-80'>
+						<HeartIcon
+							className='inline h-5 w-5 align-text-top text-red-400/75'
+							aria-label='distance'
+						/>
+						<span>&nbsp;{stats?.total_tips}</span>
+					</p>
 
-					<div className='grid grid-cols-12'>
-						<p className='col-span-7 text-base font-semibold text-opacity-80'>
-							<MapIcon
-								className='inline h-5 w-5 align-text-top text-blue-400/75'
-								aria-label='distance'
-							/>
-							<span>&nbsp;{roundDistance(distance)}</span>
-						</p>
-						<p className='col-span-5 text-base font-semibold text-opacity-80'>
-							<BanknotesIcon
-								className='inline h-5 w-5 align-text-top text-green-400/75'
-								aria-label='price'
-							/>
-							<span>
-								&nbsp;
-								{Array.from({length: price ?? 0}, () => '$').join('')}
-							</span>
-						</p>
-					</div>
-
-					<p className='mt-0.5 text-base font-semibold italic leading-4 text-opacity-80 line-clamp-2'>
+					<p className='col-span-7 text-base font-semibold text-opacity-80'>
+						<MapIcon
+							className='inline h-5 w-5 align-text-top text-blue-400/75'
+							aria-label='distance'
+						/>
+						<span>&nbsp;{roundDistance(distance)}</span>
+					</p>
+					<p className='col-span-5 text-base font-semibold text-opacity-80'>
+						<BanknotesIcon
+							className='inline h-5 w-5 align-text-top text-green-400/75'
+							aria-label='price'
+						/>
+						<span>
+							&nbsp;
+							{Array.from({length: price ?? 0}, () => '$').join('')}
+						</span>
+					</p>
+					<p className='col-span-full mt-0.5 text-sm font-semibold italic leading-4 text-opacity-80 line-clamp-2'>
 						{location.address}
 					</p>
 				</div>
 
 				{/* #CATEGORIES */}
-				<div className='hide-scrollbar mt-0.5 space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
+				<div className='hide-scrollbar mt-1 space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
 					{categories.map(({id, icon, name}) => (
 						<div
 							key={id}
