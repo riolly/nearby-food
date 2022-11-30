@@ -17,6 +17,7 @@ import {roundDistance, kThousand} from 'utils/format'
 import {defaultCategoryId} from 'utils/constant'
 
 import {type PlaceList} from 'types/place'
+import {Link} from '@tanstack/react-router'
 
 function HomePage() {
 	const [isSearchOpen, setIsSearchOpen] = React.useState(false)
@@ -141,8 +142,10 @@ function Card({
 	}
 
 	return (
-		<div
+		<Link
 			key={fsq_id}
+			to='/place/$id'
+			params={{id: fsq_id}}
 			className='relative col-span-full flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest md:col-span-3 xl:col-span-2'
 		>
 			{!noPhoto && (
@@ -281,7 +284,7 @@ function Card({
 					))}
 				</div>
 			</div>
-		</div>
+		</Link>
 	)
 }
 

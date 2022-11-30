@@ -57,6 +57,37 @@ export const useSearchPlaces = (
 		...opts,
 	})
 }
+
+const detailFields = [
+	...fields,
+	'description',
+	'email',
+	'features',
+	'hours',
+	'hours_popular',
+	'menu',
+	'related_places',
+	'social_media',
+	'tel',
+	'tips',
+	'website',
+]
+const detailFieldsUri = encodeURIComponent(detailFields.join(','))
+
+export const usePlaceDetails = (
+	id: string,
+	opts: UseQueryOptions<PlaceDetails, Error> | void
+) => {
+	console.log(id)
+	return useQuery<PlaceDetails, Error>({
+		queryKey: ['places', id],
+		queryFn: async () =>
+			fetch(
+				`https://api.foursquare.com/v3/places/${id}?fields=${detailFieldsUri}`,
+				reqOpts
+			)
+				.then(async (response) => response.json())
+				.then((data) => data as PlaceDetails),
 		...opts,
 	})
 }

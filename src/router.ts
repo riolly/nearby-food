@@ -1,4 +1,5 @@
 import {createRouteConfig, createReactRouter} from '@tanstack/react-router'
+import DetailsPage from 'pages/details'
 
 import HomePage from 'pages/home'
 import MapPage from 'pages/map'
@@ -14,7 +15,12 @@ const mapRoute = rootRoute.createRoute({
 	component: MapPage,
 })
 
-const routeConfig = rootRoute.addChildren([homeRoute, mapRoute])
+const detailsRoute = rootRoute.createRoute({
+	path: '/place/$id',
+	component: DetailsPage,
+})
+
+const routeConfig = rootRoute.addChildren([homeRoute, mapRoute, detailsRoute])
 const router = createReactRouter({routeConfig})
 
 export default router
