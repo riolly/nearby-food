@@ -18,3 +18,6 @@ export const roundDistance = (distance: number) => {
 
 	return `${rounded} ${unit}`
 }
+
+export const kThousand = (value: number): string =>
+	value >= 1000 ? `${(value / 1000).toFixed(1)}k` : String(value)
