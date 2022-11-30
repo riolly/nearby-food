@@ -1,3 +1,9 @@
+export type CategoryLocal = {
+	id: number
+	label: string
+	name: string
+}
+
 export type PlacesResponse = {
 	results: Place[]
 	context: Context
