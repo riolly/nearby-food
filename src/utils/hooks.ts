@@ -1,6 +1,6 @@
 import {useQuery, type UseQueryOptions} from '@tanstack/react-query'
 import {defaultCategoryId, defaultRadius} from 'utils/constant'
-import {type Place} from 'types/places'
+import {type PlaceDetails, type PlaceList} from 'types/place'
 
 const reqOpts = {
 	method: 'GET',
@@ -22,30 +22,30 @@ const reqOpts = {
 
 const fields = [
 	'fsq_id',
-	'name',
-	'location',
-	'distance',
 	'categories',
+	'distance',
 	'geocodes',
+	'location',
+	'name',
+	'photos',
+	'popularity',
 	'price',
 	'rating',
-	'tastes',
-	'photos',
 	'stats',
+	'tastes',
 	'verified',
-	'popularity',
 ]
 const fieldsUri = encodeURIComponent(fields.join(','))
 
 export const useSearchPlaces = (
 	query: string | number,
-	opts: UseQueryOptions<Place[], Error> | void
+	opts: UseQueryOptions<PlaceList[], Error> | void
 ) => {
 	const category = typeof query === 'number' ? query : defaultCategoryId
 	const queryEncode =
 		typeof query === 'string' ? `&query=${encodeURIComponent(query)}` : ''
 
-	return useQuery<Place[], Error>({
+	return useQuery<PlaceList[], Error>({
 		queryKey: ['places', query],
 		queryFn: async () =>
 			fetch(
@@ -53,7 +53,10 @@ export const useSearchPlaces = (
 				reqOpts
 			)
 				.then(async (response) => response.json())
-				.then((data) => data.results as Place[]),
+				.then((data) => data.results as PlaceList[]),
+		...opts,
+	})
+}
 		...opts,
 	})
 }

@@ -4,7 +4,7 @@ import {Combobox, Dialog, Transition} from '@headlessui/react'
 import {ChevronRightIcon, MagnifyingGlassIcon} from '@heroicons/react/24/solid'
 import {categories} from 'assets/categories'
 
-import {type CategoryLocal} from 'types/places'
+import {type CategoryLocal} from 'types/place'
 import {BuildingStorefrontIcon} from '@heroicons/react/24/outline'
 
 export default function SearchBox({

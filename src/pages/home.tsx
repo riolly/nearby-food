@@ -16,7 +16,7 @@ import {useSearchPlaces} from 'utils/hooks'
 import {roundDistance, kThousand} from 'utils/format'
 import {defaultCategoryId} from 'utils/constant'
 
-import {type Place} from 'types/places'
+import {type PlaceList} from 'types/place'
 
 function HomePage() {
 	const [isSearchOpen, setIsSearchOpen] = React.useState(false)
@@ -99,7 +99,7 @@ function Card({
 	stats,
 	price,
 	tastes,
-}: Place) {
+}: PlaceList) {
 	const noPhoto = photos.length === 0
 
 	tastes?.sort((a, b) => a.length - b.length)
