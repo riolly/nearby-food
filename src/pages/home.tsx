@@ -38,9 +38,11 @@ function HomePage() {
 	return (
 		<NavbarTopLayout>
 			<main className='flex w-full flex-col items-center gap-8 px-8'>
-				<h1>Food & Beverages Near You</h1>
+				<h1 className='text-2xl md:mt-4 md:text-3xl lg:mt-4 lg:text-4xl'>
+					Best Picks Near You
+				</h1>
 
-				<div className='container grid grid-cols-6 gap-4'>
+				<div className='container grid grid-cols-6 gap-4 md:gap-6 md:px-4 xl:mt-4 xl:px-32'>
 					{isLoading ? (
 						<LoadingCard />
 					) : isError ? (
@@ -55,7 +57,7 @@ function HomePage() {
 
 			{!isSearchOpen && (
 				<div
-					className='fixed bottom-16 right-4 rounded-full bg-secondary-darkest/60 p-2.5 shadow-lg shadow-primary-darkest backdrop-blur-lg'
+					className='fixed bottom-16 right-4 rounded-full bg-secondary-darkest/60 p-2.5 shadow-lg shadow-primary-darkest backdrop-blur-lg md:bottom-12 md:right-6 lg:right-8 xl:right-10'
 					onClick={onSearchClick}
 				>
 					<MagnifyingGlassIcon className='h-8 w-8 text-light-bg' />
@@ -141,7 +143,7 @@ function Card({
 	return (
 		<div
 			key={fsq_id}
-			className='relative col-span-full flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest md:col-span-3 lg:col-span-2'
+			className='relative col-span-full flex h-48 rounded-xl bg-primary-darkest shadow-lg shadow-secondary-darkest md:col-span-3 xl:col-span-2'
 		>
 			{!noPhoto && (
 				<>
