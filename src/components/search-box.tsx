@@ -101,7 +101,7 @@ export default function SearchBox({
 
 						<Combobox.Options
 							static
-							className='max-h-72 scroll-py-2 overflow-y-auto text-sm text-dark-heading'
+							className='max-h-[21rem] scroll-py-2 overflow-y-auto text-sm text-dark-heading'
 						>
 							{queryTemp && (
 								<Combobox.Option
