@@ -53,7 +53,7 @@ function HomePage() {
 				</div>
 			</main>
 
-			{isSearchOpen && (
+			{!isSearchOpen && (
 				<div
 					className='fixed bottom-16 right-4 rounded-full bg-secondary-darkest/60 p-2.5 shadow-lg shadow-primary-darkest backdrop-blur-lg'
 					onClick={onSearchClick}
