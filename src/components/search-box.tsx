@@ -1,10 +1,11 @@
 import React, {type Dispatch, type SetStateAction} from 'react'
 
 import {Combobox, Dialog, Transition} from '@headlessui/react'
-import {MagnifyingGlassIcon} from '@heroicons/react/24/solid'
+import {ChevronRightIcon, MagnifyingGlassIcon} from '@heroicons/react/24/solid'
 import {categories} from 'assets/categories'
 
 import {type CategoryLocal} from 'types/places'
+import {BuildingStorefrontIcon} from '@heroicons/react/24/outline'
 
 export default function SearchBox({
 	isOpen,
@@ -39,7 +40,13 @@ export default function SearchBox({
 	}
 
 	const onSelectOption = (category: CategoryLocal) => {
-		setSearchQuery(category.id)
+		if (category.id) {
+			setSearchQuery(category.id)
+		} else {
+			setSearchQuery(category.label)
+		}
+
+		setIsOpen(false)
 	}
 
 	const onLeaveSearch = () => {
@@ -76,7 +83,7 @@ export default function SearchBox({
 				>
 					<Combobox
 						as='div'
-						className='mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-xl bg-white bg-opacity-80 shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all'
+						className='mx-auto max-w-2xl transform divide-y divide-gray-500 divide-opacity-10 overflow-hidden rounded-xl bg-light-bg shadow-2xl ring-1 ring-black ring-opacity-5 backdrop-blur backdrop-filter transition-all'
 						onChange={onSelectOption}
 					>
 						<div className='relative'>
@@ -92,25 +99,47 @@ export default function SearchBox({
 							/>
 						</div>
 
-						{filteredCategories.length > 0 && (
-							<Combobox.Options
-								static
-								className='max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-dark-body'
-							>
-								{filteredCategories.map((category) => (
-									<Combobox.Option
-										key={category.id}
-										value={category}
-										className={({active}) => `
-											cursor-default select-none py-2 px-4
-											${active ? 'bg-primary-darker text-white' : ''}
-										`}
-									>
-										{category.label}
-									</Combobox.Option>
-								))}
-							</Combobox.Options>
-						)}
+						<Combobox.Options
+							static
+							className='max-h-72 scroll-py-2 overflow-y-auto text-sm text-dark-heading'
+						>
+							{queryTemp && (
+								<Combobox.Option
+									value={{id: 0, label: queryTemp, name: ''}}
+									className={({active}) => `
+										cursor-default select-none p-4
+										${active ? 'bg-primary-darker/80 text-light-heading' : ''}
+									`}
+								>
+									Search {queryTemp}...
+								</Combobox.Option>
+							)}
+
+							{filteredCategories.length > 0 && (
+								<>
+									<div className='flex cursor-default select-none items-center bg-primary-normal/20 px-4 py-2 text-primary-darkest'>
+										<span className='flex-auto truncate'>Categories</span>
+										<BuildingStorefrontIcon
+											className='h-6 w-6 flex-none  text-opacity-40'
+											aria-hidden='true'
+										/>
+									</div>
+
+									{filteredCategories.map((category) => (
+										<Combobox.Option
+											key={category.id}
+											value={category}
+											className={({active}) => `
+											flex cursor-default select-none items-center gap-2 py-2 px-4
+											${active ? 'bg-primary-darker/80 text-light-heading' : 'bg-light-heading'}
+											`}
+										>
+											<ChevronRightIcon className='h-4 w-4' /> {category.label}
+										</Combobox.Option>
+									))}
+								</>
+							)}
+						</Combobox.Options>
 					</Combobox>
 				</Transition.Child>
 			</Dialog>
