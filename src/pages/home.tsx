@@ -17,8 +17,13 @@ import {roundDistance} from 'utils/format'
 import {type Place} from 'types/places'
 
 function HomePage() {
-	const {data, isError, isLoading, error} = usePlaces()
+	const places = usePlaces()
 
+	const isLoading = places.isLoading
+	const isError = places.isError
+	const error = places.error
+	const data = places.data
+	const isEmpty = !data || data.length === 0
 	return (
 		<NavbarTopLayout>
 			<main className='flex w-full flex-col items-center gap-8 px-8'>
@@ -26,11 +31,11 @@ function HomePage() {
 
 				<div className='container grid grid-cols-6 gap-4'>
 					{isLoading ? (
-						<p>Loading ...</p>
+						<LoadingCard />
 					) : isError ? (
-						<p>Error: {error.message}</p>
-					) : (Array.isArray(data) && data.length === 0) || data === null ? (
-						<p>Empty ...</p>
+						<ErrorCard error={error} />
+					) : isEmpty ? (
+						<EmptyCard />
 					) : (
 						data.map((place) => <Card key={place.fsq_id} {...place} />)
 					)}
@@ -39,6 +44,26 @@ function HomePage() {
 		</NavbarTopLayout>
 	)
 }
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+const ErrorCard = ({error}: {error: Error | null}) => (
+	<div>
+		<p>Error</p>
+		{error && <p>{error.message}</p>}
+	</div>
+)
+
+const LoadingCard = () => (
+	<div>
+		<p>Loading ...</p>
+	</div>
+)
+
+const EmptyCard = () => (
+	<div>
+		<p>No place is found</p>
+	</div>
+)
 
 function Card({
 	fsq_id,
