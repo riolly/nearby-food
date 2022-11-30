@@ -16,14 +16,15 @@ export default function SearchBox({
 	setSearchQuery: Dispatch<SetStateAction<string | number>>
 }) {
 	const [queryTemp, setQueryTemp] = React.useState('')
+	const deferredQueryTemp = React.useDeferredValue(queryTemp)
 
-	// TODO: improve performance (useTransition / useDefferedValue)
-	const filteredCategories =
-		queryTemp === ''
-			? []
-			: categories.filter((category) =>
-					category.label.toLowerCase().includes(queryTemp.toLowerCase())
-			  )
+	const filteredCategories = React.useMemo(
+		() =>
+			categories.filter((category) =>
+				category.label.toLowerCase().includes(queryTemp.toLowerCase())
+			),
+		[deferredQueryTemp]
+	)
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setQueryTemp(e.target.value)
@@ -96,7 +97,6 @@ export default function SearchBox({
 								static
 								className='max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-dark-body'
 							>
-								{/* TODO: add the query as default selected option & add separator */}
 								{filteredCategories.map((category) => (
 									<Combobox.Option
 										key={category.id}
