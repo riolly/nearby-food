@@ -1,4 +1,5 @@
 import {useQuery, type UseQueryOptions} from '@tanstack/react-query'
+import {defaultCategoryId, defaultRadius} from 'utils/constant'
 import {type Place} from 'types/places'
 
 const reqOpts = {
@@ -35,14 +36,12 @@ const fields = [
 	'popularity',
 ]
 const fieldsUri = encodeURIComponent(fields.join(','))
-const defaultRadius = 1000 // 1km
-const defaultCategories = 13000 // Food & beverages
 
 export const useSearchPlaces = (
 	query: string | number,
 	opts: UseQueryOptions<Place[], Error> | void
 ) => {
-	const category = typeof query === 'number' ? query : defaultCategories
+	const category = typeof query === 'number' ? query : defaultCategoryId
 	const queryEncode =
 		typeof query === 'string' ? `&query=${encodeURIComponent(query)}` : ''
 

@@ -14,12 +14,15 @@ import {
 
 import {useSearchPlaces} from 'utils/hooks'
 import {roundDistance} from 'utils/format'
+import {defaultCategoryId} from 'utils/constant'
 
 import {type Place} from 'types/places'
 
 function HomePage() {
 	const [isSearchOpen, setIsSearchOpen] = React.useState(false)
-	const [searchQuery, setSearchQuery] = React.useState<string | number>(13000)
+	const [searchQuery, setSearchQuery] = React.useState<string | number>(
+		defaultCategoryId
+	)
 	const {isLoading, isError, data, error} = useSearchPlaces(searchQuery)
 	const isEmpty = !data || data.length === 0
 
