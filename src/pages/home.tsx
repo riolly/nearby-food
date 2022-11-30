@@ -1,6 +1,6 @@
 import React from 'react'
 import NavbarTopLayout from 'layouts/navbar'
-
+import SearchBox from 'components/search-box'
 import {
 	StarIcon,
 	MapIcon,
@@ -9,9 +9,10 @@ import {
 	CheckBadgeIcon,
 	ChevronUpIcon,
 	ChevronDownIcon,
+	MagnifyingGlassIcon,
 } from '@heroicons/react/24/solid'
 
-import {usePlaces} from 'utils/hooks'
+import {usePlaces, useSearchPlaces} from 'utils/hooks'
 import {roundDistance} from 'utils/format'
 
 import {type Place} from 'types/places'
@@ -19,11 +20,21 @@ import {type Place} from 'types/places'
 function HomePage() {
 	const places = usePlaces()
 
-	const isLoading = places.isLoading
-	const isError = places.isError
-	const error = places.error
-	const data = places.data
+	const searchOpenState = React.useState(false)
+	const searchQueryState = React.useState('')
+	const searchPlaces = useSearchPlaces(searchQueryState[0])
+
+	const isLoading = searchPlaces.isLoading ?? places.isLoading
+	const isError = searchPlaces.isError ?? places.isError
+	const error = searchPlaces.error ?? places.error
+	const data = searchPlaces.data ?? places.data
 	const isEmpty = !data || data.length === 0
+
+	const [isSearchOpen, setIsSearchOpen] = searchOpenState
+	const onSearchClick = () => {
+		setIsSearchOpen(true)
+	}
+
 	return (
 		<NavbarTopLayout>
 			<main className='flex w-full flex-col items-center gap-8 px-8'>
@@ -41,6 +52,16 @@ function HomePage() {
 					)}
 				</div>
 			</main>
+
+			{isSearchOpen && (
+				<div
+					className='fixed bottom-16 right-4 rounded-full bg-secondary-darkest/60 p-2.5 shadow-lg shadow-primary-darkest backdrop-blur-lg'
+					onClick={onSearchClick}
+				>
+					<MagnifyingGlassIcon className='h-8 w-8 text-light-bg' />
+				</div>
+			)}
+			<SearchBox openState={searchOpenState} queryState={searchQueryState} />
 		</NavbarTopLayout>
 	)
 }

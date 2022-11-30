@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query'
+import {useQuery, type UseQueryOptions} from '@tanstack/react-query'
 import {type Place} from 'types/places'
 
 const reqOpts = {
@@ -19,28 +19,27 @@ const reqOpts = {
 // 		.catch((error) => error as E)
 // }
 
-export const usePlaces = () => {
-	const fields = [
-		'fsq_id',
-		'name',
-		'location',
-		'distance',
-		'categories',
-		'geocodes',
-		'price',
-		'rating',
-		'tastes',
-		'photos',
-		'stats',
-		'verified',
-		'popularity',
-	]
-	const fieldsUri = encodeURIComponent(fields.join(','))
+const fields = [
+	'fsq_id',
+	'name',
+	'location',
+	'distance',
+	'categories',
+	'geocodes',
+	'price',
+	'rating',
+	'tastes',
+	'photos',
+	'stats',
+	'verified',
+	'popularity',
+]
+const fieldsUri = encodeURIComponent(fields.join(','))
+const defaultRadius = 1000 // 1km
+const defaultCategories = 13000 // Food & beverages
 
-	const defaultRadius = 1000 // 1km
-	const defaultCategories = 13000 // Food & beverages
-
-	return useQuery<Place[], Error>({
+export const usePlaces = (opts: UseQueryOptions<Place[], Error> | void) =>
+	useQuery<Place[], Error>({
 		queryKey: ['places'],
 		queryFn: async () =>
 			fetch(
@@ -49,5 +48,21 @@ export const usePlaces = () => {
 			)
 				.then(async (response) => response.json())
 				.then((data) => data.results as Place[]),
+		...opts,
 	})
-}
+
+export const useSearchPlaces = (
+	query: string,
+	opts: UseQueryOptions<Place[], Error> | void
+) =>
+	useQuery<Place[], Error>({
+		queryKey: ['places', query],
+		queryFn: async () =>
+			fetch(
+				`https://api.foursquare.com/v3/places/search?radius=${defaultRadius}&categories=${defaultCategories}&fields=${fieldsUri}&query=${query}`,
+				reqOpts
+			)
+				.then(async (response) => response.json())
+				.then((data) => data.results as Place[]),
+		...opts,
+	})
