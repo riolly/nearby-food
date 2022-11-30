@@ -67,20 +67,20 @@ function HomePage() {
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const ErrorCard = ({error}: {error: Error | null}) => (
-	<div>
+	<div className='col-span-full'>
 		<p>Error</p>
 		{error && <p>{error.message}</p>}
 	</div>
 )
 
 const LoadingCard = () => (
-	<div>
+	<div className='col-span-full'>
 		<p>Loading ...</p>
 	</div>
 )
 
 const EmptyCard = () => (
-	<div>
+	<div className='col-span-full'>
 		<p>No place is found</p>
 	</div>
 )
