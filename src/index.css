@@ -16,6 +16,16 @@
 	p {
 		@apply font-body text-lg text-light-body;
 	}
+
+	button {
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	a,
+	input,
+	button {
+		@apply outline-secondary-darkest;
+	}
 }
 
 @layer components {
