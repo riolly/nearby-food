@@ -55,14 +55,15 @@ function HomePage() {
 				</div>
 			</main>
 
-			{!isSearchOpen && (
-				<div
-					className='fixed bottom-16 right-4 rounded-full bg-secondary-darkest/60 p-2.5 shadow-lg shadow-primary-darkest backdrop-blur-lg md:bottom-12 md:right-6 lg:right-8 xl:right-10'
-					onClick={onSearchClick}
-				>
-					<MagnifyingGlassIcon className='h-8 w-8 text-light-bg' />
-				</div>
-			)}
+			<button
+				className={`
+					fixed bottom-16 right-4 rounded-full bg-secondary-darkest bg-opacity-60 p-2.5 shadow-lg shadow-secondary-darkest backdrop-blur-lg transition-all hover:bg-opacity-80 hover:shadow-primary-darkest active:translate-y-2 md:bottom-12 md:right-6 lg:right-8 xl:right-10 
+					${isSearchOpen ? 'blur' : ''}
+				`}
+				onClick={onSearchClick}
+			>
+				<MagnifyingGlassIcon className='h-8 w-8 text-light-bg' />
+			</button>
 			<SearchBox openState={searchOpenState} queryState={searchQueryState} />
 		</NavbarTopLayout>
 	)
