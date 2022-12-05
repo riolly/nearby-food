@@ -4,7 +4,6 @@ import {Combobox, Dialog, Transition} from '@headlessui/react'
 import {ChevronRightIcon, MagnifyingGlassIcon} from '@heroicons/react/24/solid'
 import {categories} from 'assets/categories'
 
-import {type CategoryLocal} from 'types/place'
 import {BuildingStorefrontIcon} from '@heroicons/react/24/outline'
 
 export default function SearchBox({
@@ -39,7 +38,7 @@ export default function SearchBox({
 		}
 	}
 
-	const onSelectOption = (category: CategoryLocal) => {
+	const onSelectOption = (category: {id: string; label: string}) => {
 		if (category.id) {
 			setSearchQuery(category.id)
 		} else {
@@ -88,11 +87,11 @@ export default function SearchBox({
 					>
 						<div className='relative'>
 							<MagnifyingGlassIcon
-								className='pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-900 text-opacity-40'
+								className='pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-dark-bg text-opacity-40'
 								aria-hidden='true'
 							/>
 							<Combobox.Input
-								className='h-12 w-full border-0 bg-transparent pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:ring-0'
+								className='h-12 w-full border-0 bg-transparent pl-11 pr-4 font-body text-sm text-dark-bg placeholder-gray-500 focus:ring-0'
 								placeholder='Search what you want...'
 								onChange={onInputChange}
 								onKeyDown={onInputEnter}
@@ -118,7 +117,9 @@ export default function SearchBox({
 							{filteredCategories.length > 0 && (
 								<>
 									<div className='flex cursor-default select-none items-center bg-primary-normal/20 px-4 py-2 text-primary-darkest'>
-										<span className='flex-auto truncate'>Categories</span>
+										<span className='flex-auto truncate text-dark-heading'>
+											Categories
+										</span>
 										<BuildingStorefrontIcon
 											className='h-6 w-6 flex-none  text-opacity-40'
 											aria-hidden='true'
@@ -130,7 +131,7 @@ export default function SearchBox({
 											key={category.id}
 											value={category}
 											className={({active}) => `
-											flex cursor-default select-none items-center gap-2 py-2 px-4
+											flex cursor-default select-none items-center gap-2 py-2 px-4 font-body
 											${active ? 'bg-primary-darker/80 text-light-heading' : 'bg-light-heading'}
 											`}
 										>
