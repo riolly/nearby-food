@@ -9,6 +9,7 @@ import {
 	photosSort,
 	photosClassifications,
 } from 'types/place'
+import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/24/solid'
 
 const DetailsPage = () => {
 	const {params} = useMatch('/place/$id')
@@ -43,12 +44,42 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 	})
 	const isEmpty = !data
 
+	const [photoActiveId, setPhotoActiveId] = React.useState(0)
+
+	const handlePhotosSnap = (event: React.UIEvent<HTMLDivElement>) => {
+		const parentY = event.currentTarget.getBoundingClientRect().x
+		Array.from(event.currentTarget.children).forEach((child, i) => {
+			const childY = child.getBoundingClientRect().x
+			if (childY === parentY) {
+				setPhotoActiveId(i)
+			}
+		})
+	}
+
+	const getChevronClassName = (move: 'left' | 'right') => {
+		if (isEmpty) return ''
+
+		const activeClassName =
+			move === 'left'
+				? photoActiveId === 0
+					? 'bg-opacity-40 text-slate-500'
+					: 'bg-opacity-70 text-white'
+				: photoActiveId === data.length - 1
+				? 'bg-opacity-40 text-slate-500'
+				: 'bg-opacity-70 text-white'
+
+		return `absolute top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-dark-bg p-[1px] ${activeClassName}`
+	}
+
 	return (
 		<div className='h-full space-y-4 bg-dark-bg/20'>
 			{/* #PHOTOS */}
 			<div className='bg-red-200s'>
 				{/* SNAP */}
-				<div className='bg-blue-200s h-60 w-full snap-x snap-mandatory overflow-x-scroll whitespace-nowrap '>
+				<div
+					className='bg-blue-200s hide-scrollbar relative h-60 w-full snap-x snap-mandatory overflow-x-scroll whitespace-nowrap'
+					onScroll={handlePhotosSnap}
+				>
 					{isLoading ? (
 						<LoadingCard />
 					) : isError ? (
@@ -69,6 +100,32 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 						))
 					)}
 				</div>
+
+				{data && data.length > 1 && (
+					<>
+						<div className='bg-red-200s absolute top-0 left-1 h-60 w-6'>
+							<ChevronLeftIcon className={getChevronClassName('left')} />
+						</div>
+						<div className='bg-red-200s absolute top-0 right-1 h-60 w-6'>
+							<ChevronRightIcon className={getChevronClassName('right')} />
+						</div>
+						<div className='bg-red-200s absolute top-56 flex h-4 w-full items-center justify-center gap-1'>
+							{data.map((photo, i) => (
+								<div
+									key={photo.id}
+									className={`
+											relative inline-block rounded-full bg-dark-bg
+											${i === photoActiveId ? 'h-3 w-3 bg-opacity-70' : 'h-2.5 w-2.5 bg-opacity-50'}
+											`}
+								>
+									{i === photoActiveId && (
+										<div className='centered h-1.5 w-1.5 rounded-full bg-light-bg/75' />
+									)}
+								</div>
+							))}
+						</div>
+					</>
+				)}
 
 				{/* #SORT */}
 				<div className='bg-green-200s mt-1 px-8'>
