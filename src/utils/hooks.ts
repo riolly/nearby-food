@@ -5,6 +5,8 @@ import {
 	type Tip,
 	type PlaceDetails,
 	type PlaceList,
+	type SortTypes,
+	type ClassificationTypes,
 } from 'types/place'
 
 const reqOpts = {
@@ -98,20 +100,23 @@ export const usePlaceDetails = (
 export const usePhotos = (
 	query: {
 		id: string
-		sort?: 'POPULAR' | 'NEWEST'
-		classifications?: 'food' | 'indoor' | 'menu' | 'outdoor'
+		sort: SortTypes
+		classifications: ClassificationTypes
 	},
 	opts: UseQueryOptions<Photo[], Error> | void
 ) => {
 	const {id} = query
-	const sort = query.sort ?? 'POPULAR'
-	const classifications = query.classifications ?? ''
+	const sort = query.sort ?? 'popular'
+	const classifications =
+		query.classifications === 'all'
+			? ''
+			: `&classifications=${query.classifications}`
 
 	return useQuery<Photo[], Error>({
 		queryKey: ['photos', id, sort, classifications],
 		queryFn: async () =>
 			fetch(
-				`https://api.foursquare.com/v3/places/${id}/photos?sort=${sort}&classifications=${classifications}`,
+				`https://api.foursquare.com/v3/places/${id}/photos?sort=${sort}&${classifications}`,
 				reqOpts
 			)
 				.then(async (response) => response.json())

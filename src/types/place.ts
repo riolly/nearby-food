@@ -1,3 +1,15 @@
+export const photosSort = ['popular', 'newest'] as const
+export type SortTypes = typeof photosSort[number]
+
+export const photosClassifications = [
+	'all',
+	'food',
+	'indoor',
+	'menu',
+	'outdoor',
+] as const
+export type ClassificationTypes = typeof photosClassifications[number]
+
 export type PlaceList = {
 	fsq_id: string
 	categories: Category[]
