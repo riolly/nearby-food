@@ -188,16 +188,15 @@ const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
 				</div>
 			</div>
 
-			<div className='bg-red-200s h-96 px-8'>
-				<div className=''>
-					<h1 className='text-2xl'>{name}</h1>
-				</div>
+			<div className='bg-red-200s px-8'>
+				<h1 className='text-2xl'>{name}</h1>
+
 				<div className='hide-scrollbar space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
 					{categories.map(({id, name}, i) => (
 						<span key={id} className='text-sm font-semibold text-opacity-75'>
-							{name.replace(' Restaurant', '')}
+							{name}
 							{i !== categories.length - 1 && (
-								<span className='ml-2 align-middle text-sm text-opacity-75'>
+								<span className='ml-2 align-middle text-xs text-opacity-75'>
 									&bull;
 								</span>
 							)}
