@@ -16,6 +16,9 @@
 	p {
 		@apply font-body text-lg text-light-body;
 	}
+	span {
+		@apply font-body text-light-body;
+	}
 
 	button {
 		-webkit-tap-highlight-color: transparent;
