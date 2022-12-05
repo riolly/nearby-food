@@ -9,7 +9,11 @@ import {
 	photosSort,
 	photosClassifications,
 } from 'types/place'
-import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/24/solid'
+import {
+	CheckBadgeIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+} from '@heroicons/react/24/solid'
 
 const DetailsPage = () => {
 	const {params} = useMatch('/place/$id')
@@ -191,17 +195,24 @@ const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
 			<div className='bg-red-200s px-8'>
 				<h1 className='text-2xl'>{name}</h1>
 
-				<div className='hide-scrollbar space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
-					{categories.map(({id, name}, i) => (
-						<span key={id} className='text-sm font-semibold text-opacity-75'>
-							{name}
-							{i !== categories.length - 1 && (
-								<span className='ml-2 align-middle text-xs text-opacity-75'>
-									&bull;
-								</span>
-							)}
-						</span>
-					))}
+				<div className='flex items-center gap-1'>
+					<CheckBadgeIcon className='h-5 w-5 text-secondary-lighter' />
+					<span>|</span>
+					<div className='hide-scrollbar flex-1 space-x-1 overflow-auto whitespace-nowrap'>
+						{categories.map(({id, name}, i) => (
+							<span
+								key={id}
+								className='align-middle text-sm font-semibold text-opacity-75'
+							>
+								{name}
+								{i !== categories.length - 1 && (
+									<span className='ml-1 align-middle text-xs text-opacity-75'>
+										&bull;
+									</span>
+								)}
+							</span>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
