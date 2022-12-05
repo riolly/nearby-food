@@ -10,9 +10,14 @@ import {
 	photosClassifications,
 } from 'types/place'
 import {
+	ArrowTrendingUpIcon,
+	BanknotesIcon,
 	CheckBadgeIcon,
+	ChevronDownIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
+	ClockIcon,
+	MapPinIcon,
 } from '@heroicons/react/24/solid'
 
 const DetailsPage = () => {
@@ -37,7 +42,16 @@ const DetailsPage = () => {
 	)
 }
 
-const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
+const DetailedCard = ({
+	fsq_id,
+	name,
+	categories,
+	description,
+	popularity,
+	distance,
+	price,
+	hours,
+}: PlaceDetails) => {
 	const [sort, setSort] = React.useState<SortTypes>('popular')
 	const [classifications, setClassifications] =
 		React.useState<ClassificationTypes>('all')
@@ -192,6 +206,7 @@ const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
 				</div>
 			</div>
 
+			{/* #TITLE SECTION */}
 			<div className='bg-red-200s px-8'>
 				<h1 className='text-2xl'>{name}</h1>
 
@@ -212,6 +227,40 @@ const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
 								)}
 							</span>
 						))}
+					</div>
+				</div>
+			</div>
+
+			{/* #DESCRIPTION SECTION */}
+			<div className='space-y-1 px-8'>
+				<p className='leading-6 line-clamp-3'>{description}</p>
+				<div className='flex gap-4'>
+					{popularity >= 0.75 && (
+						<div className='flex items-center gap-1 rounded-full'>
+							<ArrowTrendingUpIcon className='inline h-6 w-6 text-secondary-lightest' />
+							<p className='text-base font-semibold'>Trending</p>
+						</div>
+					)}
+					<div className='flex items-center gap-1 rounded-full'>
+						<ClockIcon
+							className={`h-5 w-5 ${
+								hours.open_now ? 'text-blue-600' : 'text-red-500'
+							}`}
+						/>
+						<p className='text-base font-semibold'>
+							{hours.open_now ? 'Open' : 'Close'}
+						</p>
+						<ChevronDownIcon className='h-4 w-4 text-light-body' />
+					</div>
+					<div className='flex items-center gap-1 rounded-full'>
+						<MapPinIcon className='h-5 w-5 text-red-600' />
+						<p className='text-base font-semibold'>Maps</p>
+					</div>
+					<div className='flex items-center gap-1 rounded-full'>
+						<BanknotesIcon className='h-5 w-5 text-green-600' />
+						<p className='text-base font-semibold'>
+							{Array.from({length: price ?? 0}, () => '$').join('')}
+						</p>
 					</div>
 				</div>
 			</div>
