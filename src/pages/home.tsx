@@ -158,9 +158,9 @@ function Card({
 						{photos.map((photo) => (
 							<div key={photo.id} className='snap-center rounded-l-lg'>
 								<img
-									src={photo.prefix + '200x200' + photo.suffix}
+									src={photo.prefix + '144x192' + photo.suffix}
 									alt={name + "'s photo"}
-									className='h-48 object-cover'
+									className='h-48'
 								/>
 							</div>
 						))}
