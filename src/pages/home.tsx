@@ -238,7 +238,7 @@ function Card({
 					<p className='col-span-5 text-base font-semibold text-opacity-80'>
 						<HeartIcon
 							className='inline h-5 w-5 align-text-top text-red-400/75'
-							aria-label='distance'
+							aria-label='total tips'
 						/>
 						<span>&nbsp;{stats?.total_tips}</span>
 					</p>
