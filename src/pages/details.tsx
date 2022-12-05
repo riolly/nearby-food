@@ -33,7 +33,7 @@ const DetailsPage = () => {
 	)
 }
 
-const DetailedCard = ({fsq_id}: PlaceDetails) => {
+const DetailedCard = ({fsq_id, name, categories}: PlaceDetails) => {
 	const [sort, setSort] = React.useState<SortTypes>('popular')
 	const [classifications, setClassifications] =
 		React.useState<ClassificationTypes>('all')
@@ -188,9 +188,23 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 				</div>
 			</div>
 
-			{/* <div className='h-96 bg-red-200 px-8'>
-				<div className='h-12 bg-blue-200'></div>
-			</div> */}
+			<div className='bg-red-200s h-96 px-8'>
+				<div className=''>
+					<h1 className='text-2xl'>{name}</h1>
+				</div>
+				<div className='hide-scrollbar space-x-2 overflow-auto whitespace-nowrap rounded-xl'>
+					{categories.map(({id, name}, i) => (
+						<span key={id} className='text-sm font-semibold text-opacity-75'>
+							{name.replace(' Restaurant', '')}
+							{i !== categories.length - 1 && (
+								<span className='ml-2 align-middle text-sm text-opacity-75'>
+									&bull;
+								</span>
+							)}
+						</span>
+					))}
+				</div>
+			</div>
 		</div>
 	)
 }
