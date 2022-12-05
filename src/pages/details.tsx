@@ -17,7 +17,7 @@ const DetailsPage = () => {
 	const isEmpty = !data
 
 	return (
-		<NavbarLayout containerClassName='pt-0 bg-dark-bg/20'>
+		<NavbarLayout containerClassName='pt-0 bg-dark-bg/20 pb-0'>
 			<main className='w-full'>
 				{isLoading ? (
 					<LoadingCard />
@@ -74,12 +74,12 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 	const photoContainerRef = React.useRef<HTMLDivElement>(null)
 
 	return (
-		<div className='h-full space-y-4 bg-dark-bg/20'>
+		<div className='h-full min-h-screen space-y-4 bg-dark-bg/20'>
 			{/* #PHOTOS */}
 			<div className='bg-red-200s'>
 				{/* SNAP */}
 				<div
-					className='bg-blue-200s hide-scrollbar relative h-60 w-full snap-x snap-mandatory overflow-x-scroll whitespace-nowrap'
+					className='bg-blue-200s hide-scrollbar relative h-60 w-full snap-x snap-mandatory overflow-x-scroll whitespace-nowrap rounded-b-xl shadow-xl shadow-primary-darkest/75'
 					onScroll={handlePhotosSnap}
 					ref={photoContainerRef}
 				>
@@ -128,17 +128,21 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 						>
 							<ChevronRightIcon className={getChevronClassName('right')} />
 						</button>
-						<div className='bg-red-200s absolute top-56 flex h-4 w-full items-center justify-center gap-1'>
+						<div className='bg-red-200s absolute top-[13.5rem] flex h-6 w-full items-center justify-center gap-1 py-1'>
 							{data.map((photo, i) => (
 								<div
 									key={photo.id}
 									className={`
 											relative inline-block rounded-full bg-dark-bg
-											${i === photoActiveId ? 'h-3 w-3 bg-opacity-70' : 'h-2.5 w-2.5 bg-opacity-50'}
+											${
+												i === photoActiveId
+													? 'h-3.5 w-3.5 bg-opacity-70'
+													: 'h-2.5 w-2.5 bg-opacity-50'
+											}
 											`}
 								>
 									{i === photoActiveId && (
-										<div className='centered h-1.5 w-1.5 rounded-full bg-light-bg/75' />
+										<div className='centered h-2 w-2 rounded-full bg-light-bg/75' />
 									)}
 								</div>
 							))}
@@ -147,7 +151,7 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 				)}
 
 				{/* #SORT */}
-				<div className='bg-green-200s mt-1 px-8'>
+				<div className='bg-green-200s mt-1.5 px-8'>
 					<div className='hide-scrollbar bg-purple-200s h-fit space-x-1 overflow-y-auto whitespace-nowrap'>
 						{photosSort.map((type) => (
 							<button
