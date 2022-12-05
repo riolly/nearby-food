@@ -71,6 +71,8 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 		return `absolute top-1/2 -translate-y-1/2 h-6 w-6 rounded-full bg-dark-bg p-[1px] ${activeClassName}`
 	}
 
+	const photoContainerRef = React.useRef<HTMLDivElement>(null)
+
 	return (
 		<div className='h-full space-y-4 bg-dark-bg/20'>
 			{/* #PHOTOS */}
@@ -79,6 +81,7 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 				<div
 					className='bg-blue-200s hide-scrollbar relative h-60 w-full snap-x snap-mandatory overflow-x-scroll whitespace-nowrap'
 					onScroll={handlePhotosSnap}
+					ref={photoContainerRef}
 				>
 					{isLoading ? (
 						<LoadingCard />
@@ -103,12 +106,28 @@ const DetailedCard = ({fsq_id}: PlaceDetails) => {
 
 				{data && data.length > 1 && (
 					<>
-						<div className='bg-red-200s absolute top-0 left-1 h-60 w-6'>
+						<button
+							className='bg-red-200s absolute top-0 h-60 w-8 px-1'
+							onClick={() => {
+								const container = photoContainerRef.current
+								if (container) {
+									container.scrollLeft -= container.clientWidth
+								}
+							}}
+						>
 							<ChevronLeftIcon className={getChevronClassName('left')} />
-						</div>
-						<div className='bg-red-200s absolute top-0 right-1 h-60 w-6'>
+						</button>
+						<button
+							className='bg-red-200s absolute top-0 right-0 h-60 w-8 px-1'
+							onClick={() => {
+								const container = photoContainerRef.current
+								if (container) {
+									container.scrollLeft += container.clientWidth
+								}
+							}}
+						>
 							<ChevronRightIcon className={getChevronClassName('right')} />
-						</div>
+						</button>
 						<div className='bg-red-200s absolute top-56 flex h-4 w-full items-center justify-center gap-1'>
 							{data.map((photo, i) => (
 								<div
