@@ -104,7 +104,7 @@ const DetailsContent = ({
 		</div>
 
 		<div className='space-y-2 px-8 pt-2 '>
-			<FeaturesSection features={features} />
+			<TipsSection fsq_id={fsq_id} />
 		</div>
 	</div>
 )
@@ -338,7 +338,7 @@ const DescriptionStatsSection = ({
 	</>
 )
 
-const Feature = ({Icon, label}: {label: string; Icon: IconType}) => (
+const FeatureItem = ({Icon, label}: {label: string; Icon: IconType}) => (
 	<div className='col-span-1 flex flex-col items-center gap-0.5'>
 		<div className='rounded-full bg-primary-normal/50 p-2'>
 			<Icon className='h-6 w-6 text-light-body' />
@@ -347,8 +347,24 @@ const Feature = ({Icon, label}: {label: string; Icon: IconType}) => (
 	</div>
 )
 
+const FeatureSubSection = ({
+	category,
+	children,
+}: {
+	category: string
+	children: React.ReactNode
+}) => (
+	<div className='rounded-lg bg-dark-bg/5 px-2.5 pt-1 pb-3'>
+		<h3 className='mb-1 font-body font-semibold text-opacity-80'>{category}</h3>
+		<div className='grid grid-cols-5 justify-center gap-2'>{children}</div>
+	</div>
+)
+
 // eslint-disable-next-line complexity
-const FeaturesSection = ({features}: {features: PlaceDetails['features']}) => {
+const FeaturesSection = ({
+	name,
+	features,
+}: Pick<PlaceDetails, 'name' | 'features'>) => {
 	const {
 		payment: {credit_cards: creditCards, digital_wallet: digitalWallet},
 		food_and_drink: {meals, alcohol},
@@ -362,84 +378,79 @@ const FeaturesSection = ({features}: {features: PlaceDetails['features']}) => {
 
 	return (
 		<>
-			<div className='rounded-lg bg-dark-bg/5 p-2'>
-				<h2 className='align-right mb-2 text-sm italic'>Payments</h2>
-				<div className='grid grid-cols-5 justify-center gap-2'>
-					<Feature label='Cash' Icon={FaMoneyBillWave} />
-					{creditCards.accepts_credit_cards && (
-						<Feature label='Credit Card' Icon={BsCreditCard2BackFill} />
-					)}
-					{digitalWallet?.accepts_nfc && (
-						<Feature label='Digital Wallet' Icon={BsApple} />
-					)}
-				</div>
-			</div>
-			<div className='rounded-lg bg-dark-bg/5 p-2'>
-				<h2 className='mb-2 text-sm italic'>Services</h2>
-				<div className='grid grid-cols-5 gap-2'>
-					{services.delivery && (
-						<Feature label='Delivery' Icon={MdDeliveryDining} />
-					)}
-					{services.takeout && (
-						<Feature label='Take out' Icon={MdTakeoutDining} />
-					)}
-					{services.drive_through && (
-						<Feature label='Drive through' Icon={MdDriveEta} />
-					)}
-					{services.dine_in && <Feature label='Dine in' Icon={MdRestaurant} />}
-					{services.dine_in.reservations && (
-						<Feature label='Reservation' Icon={MdTouchApp} />
-					)}
-				</div>
-			</div>
+			<h2 className='hidden'>{name}&apos;s features</h2>
+
+			<FeatureSubSection category='Payments'>
+				<FeatureItem label='Cash' Icon={FaMoneyBillWave} />
+				{creditCards.accepts_credit_cards && (
+					<FeatureItem label='Credit Card' Icon={BsCreditCard2BackFill} />
+				)}
+				{digitalWallet?.accepts_nfc && (
+					<FeatureItem label='Digital Wallet' Icon={BsApple} />
+				)}
+			</FeatureSubSection>
+
+			<FeatureSubSection category='Services'>
+				{services.delivery && (
+					<FeatureItem label='Delivery' Icon={MdDeliveryDining} />
+				)}
+				{services.takeout && (
+					<FeatureItem label='Take out' Icon={MdTakeoutDining} />
+				)}
+				{services.drive_through && (
+					<FeatureItem label='Drive through' Icon={MdDriveEta} />
+				)}
+				{services.dine_in && (
+					<FeatureItem label='Dine in' Icon={MdRestaurant} />
+				)}
+				{services.dine_in.reservations && (
+					<FeatureItem label='Reservation' Icon={MdTouchApp} />
+				)}
+			</FeatureSubSection>
+
 			{hasFoodDrink && (
-				<div className='rounded-lg bg-dark-bg/5 p-2'>
-					<h2 className='mb-2 text-sm italic'>Food & Drink</h2>
-					<div className='grid grid-cols-5 gap-2'>
-						{hasAlcohol && <Feature label='Alcohol' Icon={IoBeer} />}
-						{meals.breakfast && (
-							<Feature label='Breakfast' Icon={MdFreeBreakfast} />
-						)}
-						{meals.brunch && <Feature label='Brunch' Icon={MdBrunchDining} />}
-						{meals.lunch && <Feature label='Lunch' Icon={MdLunchDining} />}
-						{meals.dessert && <Feature label='Dessert' Icon={MdIcecream} />}
-						{meals.dinner && <Feature label='Dinner' Icon={MdDinnerDining} />}
-					</div>
-				</div>
+				<FeatureSubSection category='Food & Drink'>
+					{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
+					{meals.breakfast && (
+						<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
+					)}
+					{meals.brunch && <FeatureItem label='Brunch' Icon={MdBrunchDining} />}
+					{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
+					{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
+					{meals.dinner && <FeatureItem label='Dinner' Icon={MdDinnerDining} />}
+				</FeatureSubSection>
 			)}
-			<div className='rounded-lg bg-dark-bg/5 p-2'>
-				<h2 className='mb-2 text-sm italic'>Amenities</h2>
-				<div className='grid grid-cols-5 gap-2'>
-					{amenities.restroom && (
-						<Feature label='Rest room' Icon={FaRestroom} />
-					)}
-					{amenities.smoking && (
-						<Feature label='Smoking' Icon={MdSmokingRooms} />
-					)}
-					{amenities.jukebox && <Feature label='Jukebox' Icon={RiDiscFill} />}
-					{amenities.music && <Feature label='Music' Icon={MdMusicNote} />}
-					{amenities.live_music && (
-						<Feature label='Live music' Icon={FaGuitar} />
-					)}
-					{amenities.private_room && (
-						<Feature label='Private room' Icon={MdMeetingRoom} />
-					)}
-					{amenities.outdoor_seating && (
-						<Feature label='Outdoor' Icon={MdOutdoorGrill} />
-					)}
-					{amenities.tvs && <Feature label='TV' Icon={MdTv} />}
-					{amenities.atm && <Feature label='ATM' Icon={MdOutlineAtm} />}
-					{amenities.coat_check && (
-						<Feature label='Coat check' Icon={GiSecurityGate} />
-					)}
-					{amenities.wheelchair_accessible && (
-						<Feature label='Wheelchair accessible' Icon={FaWheelchair} />
-					)}
-					{amenities.parking && (
-						<Feature label='Parking area' Icon={MdLocalParking} />
-					)}
-				</div>
-			</div>
+
+			<FeatureSubSection category='Amenities'>
+				{amenities.restroom && (
+					<FeatureItem label='Rest room' Icon={FaRestroom} />
+				)}
+				{amenities.smoking && (
+					<FeatureItem label='Smoking' Icon={MdSmokingRooms} />
+				)}
+				{amenities.jukebox && <FeatureItem label='Jukebox' Icon={RiDiscFill} />}
+				{amenities.music && <FeatureItem label='Music' Icon={MdMusicNote} />}
+				{amenities.live_music && (
+					<FeatureItem label='Live music' Icon={FaGuitar} />
+				)}
+				{amenities.private_room && (
+					<FeatureItem label='Private room' Icon={MdMeetingRoom} />
+				)}
+				{amenities.outdoor_seating && (
+					<FeatureItem label='Outdoor' Icon={MdOutdoorGrill} />
+				)}
+				{amenities.tvs && <FeatureItem label='TV' Icon={MdTv} />}
+				{amenities.atm && <FeatureItem label='ATM' Icon={MdOutlineAtm} />}
+				{amenities.coat_check && (
+					<FeatureItem label='Coat check' Icon={GiSecurityGate} />
+				)}
+				{amenities.wheelchair_accessible && (
+					<FeatureItem label='Wheelchair accessible' Icon={FaWheelchair} />
+				)}
+				{amenities.parking && (
+					<FeatureItem label='Parking area' Icon={MdLocalParking} />
+				)}
+			</FeatureSubSection>
 		</>
 	)
 }
