@@ -310,14 +310,14 @@ const DescriptionStatsSection = ({
 }: Pick<PlaceDetails, 'description' | 'price' | 'hours' | 'popularity'>) => (
 	<>
 		<p className='leading-6 line-clamp-3'>{description}</p>
-		<div className='flex gap-4'>
+		<div className='flex gap-3'>
 			{popularity >= 0.75 && (
 				<div className='flex items-center gap-1 rounded-full'>
 					<ArrowTrendingUpIcon className='inline h-6 w-6 text-secondary-lightest' />
 					<p className='text-base font-semibold'>Trending</p>
 				</div>
 			)}
-			<div className='flex items-center gap-1 rounded-full'>
+			<div className='flex items-center gap-1 rounded-full border border-primary-darker/50 bg-primary-darkest/25 px-0.5'>
 				<ClockIcon
 					className={`h-5 w-5 ${
 						hours.open_now ? 'text-blue-600' : 'text-red-500'
@@ -328,9 +328,9 @@ const DescriptionStatsSection = ({
 				</p>
 				<ChevronDownIcon className='h-4 w-4 text-light-body' />
 			</div>
-			<div className='flex items-center gap-1 rounded-full'>
+			<div className='flex items-center gap-1 rounded-full border border-primary-darker/50 bg-primary-darkest/25 pl-0.5 pr-2'>
 				<MapPinIcon className='h-5 w-5 text-red-600' />
-				<p className='text-base font-semibold'>Maps</p>
+				<p className='text-base font-semibold'>Map</p>
 			</div>
 			<div className='flex items-center gap-1 rounded-full'>
 				<BanknotesIcon className='h-5 w-5 text-green-600' />
