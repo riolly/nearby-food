@@ -1,7 +1,7 @@
 import * as React from 'react'
 import NavbarLayout from 'layouts/navbar'
 import {useMatch} from '@tanstack/react-router'
-import {usePlaceDetails, usePhotos} from 'utils/hooks'
+import {usePlaceDetails, usePhotos, useTips} from 'utils/hooks'
 
 import {
 	ArrowTrendingUpIcon,
@@ -109,9 +109,7 @@ const DetailsContent = ({
 			</div>
 		)}
 
-		<div className='space-y-2 px-8 pt-2 '>
-			<TipsSection fsq_id={fsq_id} />
-		</div>
+		<TipsSection fsq_id={fsq_id} />
 	</div>
 )
 
@@ -506,11 +504,66 @@ const FeaturesSection = ({
 	)
 }
 
-const TipsSection = ({fsq_id}: {fsq_id: string}) => (
-	<>
-		<div></div>
-	</>
-)
+const TipsSection = ({fsq_id}: {fsq_id: string}) => {
+	const {data: tips} = useTips(fsq_id)
+	if (!tips || tips.length === 0) return null
+
+	return (
+		<div className='rounded-xl p-4 pt-10'>
+			<div className='relative rounded-xl border-4 border-secondary-lightest bg-red-100 px-6 pb-4 pt-8'>
+				<h2 className='absolute -top-8 left-1/2 -translate-x-1/2 rounded-lg border-4 border-secondary-lightest bg-secondary-normal p-2 font-body font-semibold'>
+					❤️ <span className='text-2xl leading-3 text-light-heading'>Tips</span>{' '}
+					❤️
+				</h2>
+
+				{tips?.map((tip, i) => {
+					const left = i % 2 === 0
+					const right = i % 2 === 1
+					return (
+						<div key={tip.id} className='imessage '>
+							<p
+								className={`${
+									left
+										? 'from-me bg-primary-darker text-light-heading before:border-r-primary-darker after:bg-red-100'
+										: 'from-them bg-secondary-normal text-dark-heading before:border-l-secondary-normal after:bg-red-100'
+								} leading-5 `}
+							>
+								{tip.text}
+								<div className={`absolute space-x-1 ${right ? 'right-4' : ''}`}>
+									{left && tip.agree_count > 0 && (
+										<span className='rounded-full bg-white p-0.5 pr-1 text-xs text-dark-heading'>
+											👍 {tip.agree_count}
+										</span>
+									)}
+									{tip.disagree_count > 0 && (
+										<span className='rounded-full bg-white p-0.5 pr-1 text-xs text-dark-heading'>
+											👎 {tip.disagree_count}
+										</span>
+									)}
+									{right && tip.agree_count > 0 && (
+										<span className='rounded-full bg-white p-0.5 pr-1 text-xs text-dark-heading'>
+											👍 {tip.agree_count}
+										</span>
+									)}
+								</div>
+							</p>
+							{tip.created_at && (
+								<time
+									className={`
+										text-xs italic text-dark-body
+										${left ? 'mr-4 text-right' : 'ml-4'}
+									`}
+								>
+									{new Date(tip.created_at).toLocaleDateString('en-US')}
+								</time>
+							)}
+						</div>
+					)
+				})}
+			</div>
+		</div>
+	)
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const ErrorCard = ({error}: {error: Error | null}) => (
