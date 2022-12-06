@@ -360,10 +360,12 @@ const FeatureSubSection = ({
 	category: string
 	children: React.ReactNode
 }) => (
-	<div className='relative rounded-xl border-4 border-secondary-lightest/10 bg-dark-bg/10 p-2.5 pb-4 pt-6'>
-		<h3 className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-lg border-4 border-dark-bg/20 bg-primary-darker px-2 font-highlight font-semibold text-opacity-90'>
-			{category}
-		</h3>
+	<div className='relative rounded-xl border-4 border-secondary-lightest/10 bg-dark-bg/10 px-2 pb-4 pt-6'>
+		<div className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-xl bg-[#7D4E40] p-1'>
+			<h3 className='rounded-lg bg-primary-darker p-0.5 px-2.5 font-body font-semibold text-opacity-90'>
+				{category}
+			</h3>
+		</div>
 		<div className='flex flex-wrap justify-center gap-3'>{children}</div>
 	</div>
 )
@@ -384,23 +386,21 @@ const FeaturesSection = ({
 	const hasAmenities = Object.values(amenities ?? {}).some((amenity) => amenity)
 
 	const Spacer = ({last, first}: {last?: boolean; first?: boolean}) => (
-		<div className={`bg-red-200s relative flex justify-between px-14`}>
+		<div className={`bg-red-200s relative flex h-fit justify-between px-14`}>
 			<div
 				className={`
-					w-2 bg-secondary-lighter bg-opacity-50 
-					${last ? 'h-3 rounded-b-full' : 'h-2 '}
-					${first ? 'absolute -top-0.5 h-1.5 rounded-t-sm bg-opacity-100' : 'h-2'}
+					w-3 bg-secondary-lighter bg-opacity-50 
+					${!last && !last ? 'h-2' : ''}
+					${last ? 'h-4 rounded-b-full' : ''}
+					${first ? 'absolute -top-0.5 h-1.5 rounded-t-sm bg-opacity-100' : ''}
 				`}
 			/>
 			<div
 				className={`
-					w-2 bg-secondary-lighter bg-opacity-50 
-					${last ? 'h-3 rounded-b-full' : 'h-2 '}
-					${
-						first
-							? 'absolute -top-0.5 right-14 h-1.5 rounded-t-sm bg-opacity-100'
-							: 'h-2'
-					}
+					w-3 bg-secondary-lighter bg-opacity-50 
+					${!last && !last ? 'h-2' : ''}
+					${last ? 'h-4 rounded-b-full' : ''}
+					${first ? 'absolute -top-0.5 right-14 h-1.5 rounded-t-sm bg-opacity-100' : ''}
 				`}
 			/>
 		</div>
