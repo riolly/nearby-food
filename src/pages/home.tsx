@@ -240,7 +240,7 @@ function Card({
 							className='inline h-5 w-5 align-text-top text-red-400/75'
 							aria-label='total tips'
 						/>
-						<span>&nbsp;{stats?.total_tips}</span>
+						<span>&nbsp;{stats?.total_tips ?? '-'}</span>
 					</p>
 
 					<p className='col-span-7 text-base font-semibold text-opacity-80'>
@@ -257,7 +257,7 @@ function Card({
 						/>
 						<span>
 							&nbsp;
-							{Array.from({length: price ?? 0}, () => '$').join('')}
+							{price ? Array.from({length: price}, () => '$').join('') : '-'}
 						</span>
 					</p>
 					<p className='col-span-full mt-0.5 text-sm font-semibold italic leading-4 text-opacity-80 line-clamp-2'>
