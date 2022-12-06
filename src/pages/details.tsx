@@ -340,7 +340,7 @@ const DescriptionStatsSection = ({
 
 const FeatureItem = ({Icon, label}: {label: string; Icon: IconType}) => (
 	<div className='col-span-1 flex flex-col items-center gap-0.5'>
-		<div className='rounded-full bg-primary-normal/50 p-2'>
+		<div className='rounded-full border-2 border-primary-normal bg-primary-normal/50 p-2 shadow'>
 			<Icon className='h-6 w-6 text-light-body' />
 		</div>
 		<span className='text-center text-sm leading-3'>{label}</span>
@@ -354,8 +354,10 @@ const FeatureSubSection = ({
 	category: string
 	children: React.ReactNode
 }) => (
-	<div className='rounded-lg bg-dark-bg/5 px-2.5 pt-1 pb-3'>
-		<h3 className='mb-1 font-body font-semibold text-opacity-80'>{category}</h3>
+	<div className='relative rounded-xl border-4 border-secondary-lightest/10 bg-dark-bg/10 p-2.5 pb-4 pt-6'>
+		<h3 className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-lg border-4 border-dark-bg/20 bg-primary-darker px-2 font-body font-semibold text-opacity-80'>
+			{category}
+		</h3>
 		<div className='grid grid-cols-5 justify-center gap-2'>{children}</div>
 	</div>
 )
@@ -376,9 +378,33 @@ const FeaturesSection = ({
 	const hasMeals = Object.values(meals).some((meal) => meal)
 	const hasFoodDrink = hasAlcohol || hasMeals
 
+	const Spacer = ({last, first}: {last?: boolean; first?: boolean}) => (
+		<div className={`bg-red-200s relative flex justify-between px-14`}>
+			<div
+				className={`
+					w-2 bg-secondary-lighter bg-opacity-50 
+					${last ? 'h-3 rounded-b-full' : 'h-2 '}
+					${first ? 'absolute -top-0.5 h-1.5 rounded-t-sm bg-opacity-100' : 'h-2'}
+				`}
+			/>
+			<div
+				className={`
+					w-2 bg-secondary-lighter bg-opacity-50 
+					${last ? 'h-3 rounded-b-full' : 'h-2 '}
+					${
+						first
+							? 'absolute -top-0.5 right-14 h-1.5 rounded-t-sm bg-opacity-100'
+							: 'h-2'
+					}
+				`}
+			/>
+		</div>
+	)
+
 	return (
 		<>
 			<h2 className='hidden'>{name}&apos;s features</h2>
+			<Spacer first />
 
 			<FeatureSubSection category='Payments'>
 				<FeatureItem label='Cash' Icon={FaMoneyBillWave} />
@@ -389,6 +415,8 @@ const FeaturesSection = ({
 					<FeatureItem label='Digital Wallet' Icon={BsApple} />
 				)}
 			</FeatureSubSection>
+
+			<Spacer />
 
 			<FeatureSubSection category='Services'>
 				{services.delivery && (
@@ -408,17 +436,27 @@ const FeaturesSection = ({
 				)}
 			</FeatureSubSection>
 
+			<Spacer />
+
 			{hasFoodDrink && (
-				<FeatureSubSection category='Food & Drink'>
-					{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
-					{meals.breakfast && (
-						<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
-					)}
-					{meals.brunch && <FeatureItem label='Brunch' Icon={MdBrunchDining} />}
-					{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
-					{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
-					{meals.dinner && <FeatureItem label='Dinner' Icon={MdDinnerDining} />}
-				</FeatureSubSection>
+				<>
+					<FeatureSubSection category='Food & Drink'>
+						{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
+						{meals.breakfast && (
+							<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
+						)}
+						{meals.brunch && (
+							<FeatureItem label='Brunch' Icon={MdBrunchDining} />
+						)}
+						{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
+						{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
+						{meals.dinner && (
+							<FeatureItem label='Dinner' Icon={MdDinnerDining} />
+						)}
+					</FeatureSubSection>
+
+					<Spacer />
+				</>
 			)}
 
 			<FeatureSubSection category='Amenities'>
@@ -451,6 +489,8 @@ const FeaturesSection = ({
 					<FeatureItem label='Parking area' Icon={MdLocalParking} />
 				)}
 			</FeatureSubSection>
+
+			<Spacer last />
 		</>
 	)
 }
