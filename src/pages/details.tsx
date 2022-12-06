@@ -103,9 +103,11 @@ const DetailsContent = ({
 			/>
 		</div>
 
-		<div className='px-8 pt-6 '>
-			<FeaturesSection name={name} features={features} />
-		</div>
+		{features && Object.keys(features ?? {}).length > 0 && (
+			<div className='px-8 pt-6 '>
+				<FeaturesSection name={name} features={features} />
+			</div>
+		)}
 
 		<div className='space-y-2 px-8 pt-2 '>
 			<TipsSection fsq_id={fsq_id} />
@@ -371,16 +373,15 @@ const FeaturesSection = ({
 	name,
 	features,
 }: Pick<PlaceDetails, 'name' | 'features'>) => {
-	const {
-		payment: {credit_cards: creditCards, digital_wallet: digitalWallet},
-		food_and_drink: {meals, alcohol},
-		services,
-		amenities,
-	} = features
+	const {payment, food_and_drink: foodAndDrink, services, amenities} = features
 
-	const hasAlcohol = Object.values(alcohol).some((drink) => drink)
-	const hasMeals = Object.values(meals).some((meal) => meal)
+	const hasAlcohol = Object.values(foodAndDrink.alcohol ?? {}).some(
+		(drink) => drink
+	)
+	const hasMeals = Object.values(foodAndDrink.meals ?? {}).some((meal) => meal)
 	const hasFoodDrink = hasAlcohol || hasMeals
+	const hasServices = Object.values(services ?? {}).some((service) => service)
+	const hasAmenities = Object.values(amenities ?? {}).some((amenity) => amenity)
 
 	const Spacer = ({last, first}: {last?: boolean; first?: boolean}) => (
 		<div className={`bg-red-200s relative flex justify-between px-14`}>
@@ -413,79 +414,91 @@ const FeaturesSection = ({
 				<>
 					<FeatureSubSection category='Food & Drink'>
 						{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
-						{meals.breakfast && (
+						{foodAndDrink.meals?.breakfast && (
 							<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
 						)}
-						{meals.brunch && (
+						{foodAndDrink.meals?.brunch && (
 							<FeatureItem label='Brunch' Icon={MdBrunchDining} />
 						)}
-						{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
-						{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
-						{meals.dinner && (
+						{foodAndDrink.meals?.lunch && (
+							<FeatureItem label='Lunch' Icon={MdLunchDining} />
+						)}
+						{foodAndDrink.meals?.dessert && (
+							<FeatureItem label='Dessert' Icon={MdIcecream} />
+						)}
+						{foodAndDrink.meals?.dinner && (
 							<FeatureItem label='Dinner' Icon={MdDinnerDining} />
 						)}
 					</FeatureSubSection>
 					<Spacer />
 				</>
 			)}
-			<FeatureSubSection category='Services'>
-				{services.delivery && (
-					<FeatureItem label='Delivery' Icon={MdDeliveryDining} />
-				)}
-				{services.takeout && (
-					<FeatureItem label='Take out' Icon={MdTakeoutDining} />
-				)}
-				{services.drive_through && (
-					<FeatureItem label='Drive through' Icon={MdDriveEta} />
-				)}
-				{services.dine_in && (
-					<FeatureItem label='Dine in' Icon={MdRestaurant} />
-				)}
-				{services.dine_in.reservations && (
-					<FeatureItem label='Reservation' Icon={MdTouchApp} />
-				)}
-			</FeatureSubSection>
-			<Spacer />
+			{hasServices && (
+				<>
+					<FeatureSubSection category='Services'>
+						{services.delivery && (
+							<FeatureItem label='Delivery' Icon={MdDeliveryDining} />
+						)}
+						{services.takeout && (
+							<FeatureItem label='Take out' Icon={MdTakeoutDining} />
+						)}
+						{services.drive_through && (
+							<FeatureItem label='Drive through' Icon={MdDriveEta} />
+						)}
+						{services.dine_in && (
+							<FeatureItem label='Dine in' Icon={MdRestaurant} />
+						)}
+						{services.dine_in?.reservations && (
+							<FeatureItem label='Reservation' Icon={MdTouchApp} />
+						)}
+					</FeatureSubSection>
+					<Spacer />
+				</>
+			)}
 			<FeatureSubSection category='Payments'>
 				<FeatureItem label='Cash' Icon={FaMoneyBillWave} />
-				{creditCards.accepts_credit_cards && (
+				{payment?.credit_cards?.accepts_credit_cards && (
 					<FeatureItem label='Credit Card' Icon={BsCreditCard2BackFill} />
 				)}
-				{digitalWallet?.accepts_nfc && (
+				{payment?.digital_wallet?.accepts_nfc && (
 					<FeatureItem label='Digital Wallet' Icon={BsApple} />
 				)}
 			</FeatureSubSection>
 			<Spacer />
-			<FeatureSubSection category='Amenities'>
-				{amenities.restroom && (
-					<FeatureItem label='Rest room' Icon={FaRestroom} />
-				)}
-				{amenities.smoking && (
-					<FeatureItem label='Smoking' Icon={MdSmokingRooms} />
-				)}
-				{amenities.jukebox && <FeatureItem label='Jukebox' Icon={RiDiscFill} />}
-				{amenities.music && <FeatureItem label='Music' Icon={MdMusicNote} />}
-				{amenities.live_music && (
-					<FeatureItem label='Live music' Icon={FaGuitar} />
-				)}
-				{amenities.private_room && (
-					<FeatureItem label='Private room' Icon={MdMeetingRoom} />
-				)}
-				{amenities.outdoor_seating && (
-					<FeatureItem label='Outdoor' Icon={MdOutdoorGrill} />
-				)}
-				{amenities.tvs && <FeatureItem label='TV' Icon={MdTv} />}
-				{amenities.atm && <FeatureItem label='ATM' Icon={MdOutlineAtm} />}
-				{amenities.coat_check && (
-					<FeatureItem label='Coat check' Icon={GiSecurityGate} />
-				)}
-				{amenities.wheelchair_accessible && (
-					<FeatureItem label='Wheelchair accessible' Icon={FaWheelchair} />
-				)}
-				{amenities.parking && (
-					<FeatureItem label='Parking area' Icon={MdLocalParking} />
-				)}
-			</FeatureSubSection>
+			{hasAmenities && (
+				<FeatureSubSection category='Amenities'>
+					{amenities.restroom && (
+						<FeatureItem label='Rest room' Icon={FaRestroom} />
+					)}
+					{amenities.smoking && (
+						<FeatureItem label='Smoking' Icon={MdSmokingRooms} />
+					)}
+					{amenities.jukebox && (
+						<FeatureItem label='Jukebox' Icon={RiDiscFill} />
+					)}
+					{amenities.music && <FeatureItem label='Music' Icon={MdMusicNote} />}
+					{amenities.live_music && (
+						<FeatureItem label='Live music' Icon={FaGuitar} />
+					)}
+					{amenities.private_room && (
+						<FeatureItem label='Private room' Icon={MdMeetingRoom} />
+					)}
+					{amenities.outdoor_seating && (
+						<FeatureItem label='Outdoor' Icon={MdOutdoorGrill} />
+					)}
+					{amenities.tvs && <FeatureItem label='TV' Icon={MdTv} />}
+					{amenities.atm && <FeatureItem label='ATM' Icon={MdOutlineAtm} />}
+					{amenities.coat_check && (
+						<FeatureItem label='Coat check' Icon={GiSecurityGate} />
+					)}
+					{amenities.wheelchair_accessible && (
+						<FeatureItem label='Wheelchair accessible' Icon={FaWheelchair} />
+					)}
+					{amenities.parking && (
+						<FeatureItem label='Parking area' Icon={MdLocalParking} />
+					)}
+				</FeatureSubSection>
+			)}
 			<Spacer last />
 		</>
 	)
