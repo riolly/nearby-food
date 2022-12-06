@@ -103,6 +103,10 @@ const DetailsContent = ({
 			/>
 		</div>
 
+		<div className='px-8 pt-6 '>
+			<FeaturesSection name={name} features={features} />
+		</div>
+
 		<div className='space-y-2 px-8 pt-2 '>
 			<TipsSection fsq_id={fsq_id} />
 		</div>
@@ -340,7 +344,7 @@ const DescriptionStatsSection = ({
 
 const FeatureItem = ({Icon, label}: {label: string; Icon: IconType}) => (
 	<div className='flex basis-1/5 flex-col items-center gap-0.5'>
-		<div className='rounded-full border-2 border-primary-normal bg-primary-normal/50 p-2 shadow'>
+		<div className='rounded-full border-2 border-primary-normal/50 bg-primary-normal/50 p-2 shadow'>
 			<Icon className='h-6 w-6 text-light-body' />
 		</div>
 		<span className='text-center text-sm leading-3'>{label}</span>
@@ -355,7 +359,7 @@ const FeatureSubSection = ({
 	children: React.ReactNode
 }) => (
 	<div className='relative rounded-xl border-4 border-secondary-lightest/10 bg-dark-bg/10 p-2.5 pb-4 pt-6'>
-		<h3 className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-lg border-4 border-dark-bg/20 bg-primary-darker px-2 font-body font-semibold text-opacity-80'>
+		<h3 className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-lg border-4 border-dark-bg/20 bg-primary-darker px-2 font-highlight font-semibold text-opacity-90'>
 			{category}
 		</h3>
 		<div className='flex flex-wrap justify-center gap-3'>{children}</div>
@@ -486,6 +490,12 @@ const FeaturesSection = ({
 		</>
 	)
 }
+
+const TipsSection = ({fsq_id}: {fsq_id: string}) => (
+	<>
+		<div></div>
+	</>
+)
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const ErrorCard = ({error}: {error: Error | null}) => (
