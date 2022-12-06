@@ -87,7 +87,7 @@ const DetailedCard = ({
 }: PlaceDetails) => {
 	const [sort, setSort] = React.useState<SortTypes>('popular')
 	const [classifications, setClassifications] =
-		React.useState<ClassificationTypes>('all')
+		React.useState<ClassificationTypes>('food')
 	const {data, isLoading, isError, error} = usePhotos({
 		id: fsq_id,
 		sort,
