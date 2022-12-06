@@ -2,13 +2,7 @@ import * as React from 'react'
 import NavbarLayout from 'layouts/navbar'
 import {useMatch} from '@tanstack/react-router'
 import {usePlaceDetails, usePhotos} from 'utils/hooks'
-import {
-	type SortTypes,
-	type PlaceDetails,
-	type ClassificationTypes,
-	photosSort,
-	photosClassifications,
-} from 'types/place'
+
 import {
 	ArrowTrendingUpIcon,
 	BanknotesIcon,
@@ -19,6 +13,45 @@ import {
 	ClockIcon,
 	MapPinIcon,
 } from '@heroicons/react/24/solid'
+
+import {
+	MdFreeBreakfast,
+	MdLunchDining,
+	MdBrunchDining,
+	MdIcecream,
+	MdDinnerDining,
+	MdDeliveryDining,
+	MdTakeoutDining,
+	MdDriveEta,
+	MdRestaurant,
+	MdTouchApp,
+	MdSmokingRooms,
+	MdMusicNote,
+	MdMeetingRoom,
+	MdOutdoorGrill,
+	MdOutlineAtm,
+	MdLocalParking,
+	MdTv,
+} from 'react-icons/md'
+import {
+	FaRestroom,
+	FaGuitar,
+	FaWheelchair,
+	FaMoneyBillWave,
+} from 'react-icons/fa'
+import {BsCreditCard2BackFill, BsApple} from 'react-icons/bs'
+import {RiDiscFill} from 'react-icons/ri'
+import {GiSecurityGate} from 'react-icons/gi'
+import {IoBeer} from 'react-icons/io5'
+
+import {
+	type SortTypes,
+	type PlaceDetails,
+	type ClassificationTypes,
+	photosSort,
+	photosClassifications,
+} from 'types/place'
+import {type IconType} from 'react-icons'
 
 const DetailsPage = () => {
 	const {params} = useMatch('/place/$id')
@@ -48,9 +81,9 @@ const DetailedCard = ({
 	categories,
 	description,
 	popularity,
-	distance,
-	price,
 	hours,
+	price,
+	features,
 }: PlaceDetails) => {
 	const [sort, setSort] = React.useState<SortTypes>('popular')
 	const [classifications, setClassifications] =
@@ -92,7 +125,7 @@ const DetailedCard = ({
 	const photoContainerRef = React.useRef<HTMLDivElement>(null)
 
 	return (
-		<div className='h-full min-h-screen space-y-4 bg-dark-bg/20'>
+		<div className='h-full min-h-screen space-y-4 bg-dark-bg/20 pb-16'>
 			{/* #PHOTOS */}
 			<div className='bg-red-200s'>
 				{/* SNAP */}
@@ -264,7 +297,118 @@ const DetailedCard = ({
 					</div>
 				</div>
 			</div>
+
+			{/* #FEATURES SECTION */}
+			<div className='space-y-2 px-8 pt-2 '>
+				<Features features={features} />
+			</div>
 		</div>
+	)
+}
+
+const Feature = ({Icon, label}: {label: string; Icon: IconType}) => (
+	<div className='col-span-1 flex flex-col items-center gap-0.5'>
+		<div className='rounded-full bg-primary-normal/50 p-2'>
+			<Icon className='h-6 w-6 text-light-body' />
+		</div>
+		<span className='text-center text-sm leading-3'>{label}</span>
+	</div>
+)
+
+// eslint-disable-next-line complexity
+const Features = ({features}: {features: PlaceDetails['features']}) => {
+	const {
+		payment: {credit_cards: creditCards, digital_wallet: digitalWallet},
+		food_and_drink: {meals, alcohol},
+		services,
+		amenities,
+	} = features
+
+	const hasAlcohol = Object.values(alcohol).some((drink) => drink)
+	const hasMeals = Object.values(meals).some((meal) => meal)
+	const hasFoodDrink = hasAlcohol || hasMeals
+
+	return (
+		<>
+			<div className='rounded-lg bg-dark-bg/5 p-2'>
+				<h2 className='align-right mb-2 text-sm italic'>Payments</h2>
+				<div className='grid grid-cols-5 justify-center gap-2'>
+					<Feature label='Cash' Icon={FaMoneyBillWave} />
+					{creditCards.accepts_credit_cards && (
+						<Feature label='Credit Card' Icon={BsCreditCard2BackFill} />
+					)}
+					{digitalWallet?.accepts_nfc && (
+						<Feature label='Digital Wallet' Icon={BsApple} />
+					)}
+				</div>
+			</div>
+			<div className='rounded-lg bg-dark-bg/5 p-2'>
+				<h2 className='mb-2 text-sm italic'>Services</h2>
+				<div className='grid grid-cols-5 gap-2'>
+					{services.delivery && (
+						<Feature label='Delivery' Icon={MdDeliveryDining} />
+					)}
+					{services.takeout && (
+						<Feature label='Take out' Icon={MdTakeoutDining} />
+					)}
+					{services.drive_through && (
+						<Feature label='Drive through' Icon={MdDriveEta} />
+					)}
+					{services.dine_in && <Feature label='Dine in' Icon={MdRestaurant} />}
+					{services.dine_in.reservations && (
+						<Feature label='Reservation' Icon={MdTouchApp} />
+					)}
+				</div>
+			</div>
+			{hasFoodDrink && (
+				<div className='rounded-lg bg-dark-bg/5 p-2'>
+					<h2 className='mb-2 text-sm italic'>Food & Drink</h2>
+					<div className='grid grid-cols-5 gap-2'>
+						{hasAlcohol && <Feature label='Alcohol' Icon={IoBeer} />}
+						{meals.breakfast && (
+							<Feature label='Breakfast' Icon={MdFreeBreakfast} />
+						)}
+						{meals.brunch && <Feature label='Brunch' Icon={MdBrunchDining} />}
+						{meals.lunch && <Feature label='Lunch' Icon={MdLunchDining} />}
+						{meals.dessert && <Feature label='Dessert' Icon={MdIcecream} />}
+						{meals.dinner && <Feature label='Dinner' Icon={MdDinnerDining} />}
+					</div>
+				</div>
+			)}
+			<div className='rounded-lg bg-dark-bg/5 p-2'>
+				<h2 className='mb-2 text-sm italic'>Amenities</h2>
+				<div className='grid grid-cols-5 gap-2'>
+					{amenities.restroom && (
+						<Feature label='Rest room' Icon={FaRestroom} />
+					)}
+					{amenities.smoking && (
+						<Feature label='Smoking' Icon={MdSmokingRooms} />
+					)}
+					{amenities.jukebox && <Feature label='Jukebox' Icon={RiDiscFill} />}
+					{amenities.music && <Feature label='Music' Icon={MdMusicNote} />}
+					{amenities.live_music && (
+						<Feature label='Live music' Icon={FaGuitar} />
+					)}
+					{amenities.private_room && (
+						<Feature label='Private room' Icon={MdMeetingRoom} />
+					)}
+					{amenities.outdoor_seating && (
+						<Feature label='Outdoor' Icon={MdOutdoorGrill} />
+					)}
+					{amenities.tvs && <Feature label='TV' Icon={MdTv} />}
+					{amenities.atm && <Feature label='ATM' Icon={MdOutlineAtm} />}
+					{amenities.coat_check && (
+						<Feature label='Coat check' Icon={GiSecurityGate} />
+					)}
+					{amenities.wheelchair_accessible && (
+						<Feature label='Wheelchair accessible' Icon={FaWheelchair} />
+					)}
+					{amenities.parking && (
+						<Feature label='Parking area' Icon={MdLocalParking} />
+					)}
+				</div>
+			</div>
+		</>
 	)
 }
 
