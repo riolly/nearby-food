@@ -334,12 +334,14 @@ const DescriptionStatsSection = ({
 				<MapPinIcon className='h-5 w-5 text-red-600' />
 				<p className='text-base font-semibold'>Map</p>
 			</div>
-			<div className='flex items-center gap-1 rounded-full'>
-				<BanknotesIcon className='h-5 w-5 text-green-600' />
-				<p className='text-base font-semibold'>
-					{Array.from({length: price ?? 0}, () => '$').join('')}
-				</p>
-			</div>
+			{price && (
+				<div className='flex items-center gap-1 rounded-full'>
+					<BanknotesIcon className='h-5 w-5 text-green-600' />
+					<p className='text-base font-semibold'>
+						{Array.from({length: price}, () => '$').join('')}
+					</p>
+				</div>
+			)}
 		</div>
 	</>
 )
