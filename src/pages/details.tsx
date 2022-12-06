@@ -339,7 +339,7 @@ const DescriptionStatsSection = ({
 )
 
 const FeatureItem = ({Icon, label}: {label: string; Icon: IconType}) => (
-	<div className='col-span-1 flex flex-col items-center gap-0.5'>
+	<div className='flex basis-1/5 flex-col items-center gap-0.5'>
 		<div className='rounded-full border-2 border-primary-normal bg-primary-normal/50 p-2 shadow'>
 			<Icon className='h-6 w-6 text-light-body' />
 		</div>
@@ -358,7 +358,7 @@ const FeatureSubSection = ({
 		<h3 className='absolute -top-5 left-1/2 mb-1 -translate-x-1/2 rounded-lg border-4 border-dark-bg/20 bg-primary-darker px-2 font-body font-semibold text-opacity-80'>
 			{category}
 		</h3>
-		<div className='grid grid-cols-5 justify-center gap-2'>{children}</div>
+		<div className='flex flex-wrap justify-center gap-3'>{children}</div>
 	</div>
 )
 
@@ -405,19 +405,25 @@ const FeaturesSection = ({
 		<>
 			<h2 className='hidden'>{name}&apos;s features</h2>
 			<Spacer first />
-
-			<FeatureSubSection category='Payments'>
-				<FeatureItem label='Cash' Icon={FaMoneyBillWave} />
-				{creditCards.accepts_credit_cards && (
-					<FeatureItem label='Credit Card' Icon={BsCreditCard2BackFill} />
-				)}
-				{digitalWallet?.accepts_nfc && (
-					<FeatureItem label='Digital Wallet' Icon={BsApple} />
-				)}
-			</FeatureSubSection>
-
-			<Spacer />
-
+			{hasFoodDrink && (
+				<>
+					<FeatureSubSection category='Food & Drink'>
+						{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
+						{meals.breakfast && (
+							<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
+						)}
+						{meals.brunch && (
+							<FeatureItem label='Brunch' Icon={MdBrunchDining} />
+						)}
+						{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
+						{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
+						{meals.dinner && (
+							<FeatureItem label='Dinner' Icon={MdDinnerDining} />
+						)}
+					</FeatureSubSection>
+					<Spacer />
+				</>
+			)}
 			<FeatureSubSection category='Services'>
 				{services.delivery && (
 					<FeatureItem label='Delivery' Icon={MdDeliveryDining} />
@@ -435,30 +441,17 @@ const FeaturesSection = ({
 					<FeatureItem label='Reservation' Icon={MdTouchApp} />
 				)}
 			</FeatureSubSection>
-
 			<Spacer />
-
-			{hasFoodDrink && (
-				<>
-					<FeatureSubSection category='Food & Drink'>
-						{hasAlcohol && <FeatureItem label='Alcohol' Icon={IoBeer} />}
-						{meals.breakfast && (
-							<FeatureItem label='Breakfast' Icon={MdFreeBreakfast} />
-						)}
-						{meals.brunch && (
-							<FeatureItem label='Brunch' Icon={MdBrunchDining} />
-						)}
-						{meals.lunch && <FeatureItem label='Lunch' Icon={MdLunchDining} />}
-						{meals.dessert && <FeatureItem label='Dessert' Icon={MdIcecream} />}
-						{meals.dinner && (
-							<FeatureItem label='Dinner' Icon={MdDinnerDining} />
-						)}
-					</FeatureSubSection>
-
-					<Spacer />
-				</>
-			)}
-
+			<FeatureSubSection category='Payments'>
+				<FeatureItem label='Cash' Icon={FaMoneyBillWave} />
+				{creditCards.accepts_credit_cards && (
+					<FeatureItem label='Credit Card' Icon={BsCreditCard2BackFill} />
+				)}
+				{digitalWallet?.accepts_nfc && (
+					<FeatureItem label='Digital Wallet' Icon={BsApple} />
+				)}
+			</FeatureSubSection>
+			<Spacer />
 			<FeatureSubSection category='Amenities'>
 				{amenities.restroom && (
 					<FeatureItem label='Rest room' Icon={FaRestroom} />
@@ -489,7 +482,6 @@ const FeaturesSection = ({
 					<FeatureItem label='Parking area' Icon={MdLocalParking} />
 				)}
 			</FeatureSubSection>
-
 			<Spacer last />
 		</>
 	)
